@@ -11,7 +11,6 @@ async function signUp(userObj, successCallback, errorCallback) {
         });
         successCallback(user);
     } catch (error) {
-        console.log(error)
         errorCallback(error);
     }
 }
@@ -36,14 +35,12 @@ async function resendConfirmation(email, successCallback, errorCallback) {
     }
 }
 
-async function confirmSignup(email, successCallback, errorCallback) {
+async function confirmSignup(email, confirmationCode, successCallback, errorCallback) {
     try {
-        const user = await Auth.resendSignUp(email);
-        console.log(user)
-        // successCallback(user);
+        const user = await Auth.confirmSignUp(email, confirmationCode);
+        successCallback(user);
     } catch (error) {
         errorCallback(error);
-
     }
 }
 

@@ -11,11 +11,13 @@ const Button = ({
     loading = false
 }) => {
     let buttonStyle = {}
+    let loadingSpinnerColor = colors.white
     if (variant === values.primary) {
         buttonStyle = { ...styles.button, ...(variant === values.primary ? { backgroundColor: colors.green } : {}) }
     } else if (variant === values.link) {
         buttonStyle = styles.linkButtonStyle
     } else if (variant === values.secondary) {
+        loadingSpinnerColor = colors.green
         buttonStyle = styles.secondaryButton
     }
 
@@ -29,7 +31,7 @@ const Button = ({
             {
                 loading
                 ?
-                    <ActivityIndicator color={colors.white} size="large" />
+                    <ActivityIndicator color={loadingSpinnerColor} size="large" />
                 :
                     <Text 
                         style={

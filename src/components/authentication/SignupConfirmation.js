@@ -16,6 +16,7 @@ const SignupConfirmation = ({ handleSuccess, email }) => {
     const unblockForm = () => {
         setFormDisable(false)
         setSubmitting(false)
+        setCodeResending(false)
         handleSuccess()
     }
 
@@ -47,6 +48,7 @@ const SignupConfirmation = ({ handleSuccess, email }) => {
     const auxillaryComponent = codeResent ? <Text style={styles.confirmationResent}>Confirmation resent</Text> : null
     return <>
         <ScreenTitle title="Confirm Account" />
+        <Text style={styles.subText}>Enter the confirmation code sent to your email</Text>
         <Form
              defaultValues={defaultValues}
              onFormSubmit={(data) => handleSubmit(data)}
@@ -64,7 +66,7 @@ const SignupConfirmation = ({ handleSuccess, email }) => {
             title="Resend Confirmation"
             handlePress={() => handleResend()}
             disabled={formDisable}
-            loading={true}
+            loading={codeResending}
         />
     </>
 }
@@ -75,6 +77,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: fontSize.small,
         marginBottom: spacing.xlight
+    },
+    subText: {
+        marginHorizontal: spacing.medium,
+        marginTop: spacing.xlight,
+        color: colors.black,
+        fontSize: fontSize.medium,
+        textAlign: 'center'
     }
 })
 

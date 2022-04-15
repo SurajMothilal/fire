@@ -4,8 +4,9 @@ import ScreenTitle from '../common/ScreenTitle';
 import Form from '../common/Form';
 import { signUp } from '../../services/auth';
 import { errors } from '../../constants';
+import { errorCodes } from '../../services/errorHandler';
 
-const SignUp = ({ handleCancel, handleSuccess }) => {
+const SignUp = ({ handleCancel, handleSuccess, locale }) => {
     const [formError, setFormError] = useState(null)
     const [submitting, setSubmitting] = useState(false)
     const handleSubmit = useCallback(async (data) => {
@@ -18,7 +19,7 @@ const SignUp = ({ handleCancel, handleSuccess }) => {
     })
     const signUpFailed = useCallback((error) => {
         setSubmitting(false)
-        setFormError(errors.generic)
+        setFormError(errorCodes[error.code][locale] || errors.generic)
     })
     const fields = [
         {

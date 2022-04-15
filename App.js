@@ -21,7 +21,9 @@ const MyTheme = {
 };
 
 const App = () => {
-
+  const initialParams = {
+    locale: 'en-CA'
+  }
   return (
       <NavigationContainer theme={MyTheme}>
           <Stack.Navigator
@@ -30,10 +32,10 @@ const App = () => {
               headerShown: false
             }}
           >
-            <Stack.Screen name={screenNames.login} component={NvLogin} />
-            <Stack.Screen name={screenNames.signup} component={NvSignup} />
-            <Stack.Screen name={screenNames.signupconfirmation} component={NvSignupConfirmation} />
-            <Stack.Screen name={screenNames.home} component={NvHome} />
+            <Stack.Screen name={screenNames.login} component={NvLogin} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.signup} component={NvSignup} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.signupconfirmation} component={NvSignupConfirmation} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
           </Stack.Navigator>
       </NavigationContainer>
   );
