@@ -1,38 +1,52 @@
 import React, { useState, useCallback } from 'react';
+import * as Yup from 'yup';
 import { View, Image, StyleSheet } from 'react-native';
 import { colors, spacing, values } from '../../constants';
 import { APPICON } from '../../assets'
+import { resendConfirmation } from '../../services/auth';
 import Button from '../common/Button';
 import Form from '../common/Form';
 import { login } from '../../services/auth';
+import { errors } from '../../constants';
+import { errorCodes } from '../../services/errorHandler';
 
 
-const Login = ({ handleSignUpPress, handleForgotPasswordPress }) => {
+const Login = ({
+    handleSignUpPress,
+    handleForgotPasswordPress,
+    handleUnconfirmedLogin,
+    handleLoginSuccess,
+    locale
+}) => {
+    const [formError, setFormError] = useState(null)
     const [submitting, setSubmitting] = useState(false);
-    const loginSuccess = useCallback((user) => {
+    const loginSuccess = useCallback(async (user) => {
+        console.log(user?.attributes)
+        if(user?.attributes?.email_verified) {
+            handleLoginSuccess()
+        } else {
+            await resendConfirmation(user?.attributes?.email)
+            handleUnconfirmedLogin(user?.attributes?.email)
+        }
         setSubmitting(false);
     })
     const loginFailed = useCallback((error) => {
         setSubmitting(false);
+        setFormError(errorCodes?.[error.code]?.[locale] || errors.generic)
     })
     const handleLogin = useCallback(async (user) => {
         setSubmitting(true);
-        // await login(user, loginSuccess, loginFailed)
+        await login(user, loginSuccess, loginFailed)
     })
     const fields = [
         {
-            rules: {
-                required: true
-            },
             name: 'email',
             placeholder: 'Email'
         },
         {
-            rules: {
-                required: true
-            },
             name: 'password',
-            placeholder: 'Password'
+            placeholder: 'Password',
+            secure: true
         }
     ]
 
@@ -40,6 +54,14 @@ const Login = ({ handleSignUpPress, handleForgotPasswordPress }) => {
         email: '',
         password: ''
     }
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Email must be valid')
+            .required('Email is required'),
+        password: Yup.string()
+            .required('Password is required')
+    })
 
     return (
         <View style={styles.mainContainer}>
@@ -56,6 +78,8 @@ const Login = ({ handleSignUpPress, handleForgotPasswordPress }) => {
                 primaryButtonText="Login"
                 loading={submitting}
                 disabled={submitting}
+                formError={formError}
+                validationSchema={validationSchema}
             />
             <Button
                 variant={values.link}

@@ -19,7 +19,7 @@ const SignUp = ({ handleCancel, handleSuccess, locale }) => {
     })
     const signUpFailed = useCallback((error) => {
         setSubmitting(false)
-        setFormError(errorCodes[error.code][locale] || errors.generic)
+        setFormError(errorCodes?.[error.code]?.[locale] || errors.generic)
     })
     const fields = [
         {
@@ -63,6 +63,7 @@ const SignUp = ({ handleCancel, handleSuccess, locale }) => {
         password: '',
         confirmpassword: ''
     }
+
     return <>
         <ScreenTitle title="Sign Up" />
         <Form

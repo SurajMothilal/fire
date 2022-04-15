@@ -5,8 +5,9 @@ import Form from '../common/Form';
 import { confirmSignup, resendConfirmation } from '../../services/auth';
 import Button from '../common/Button';
 import { colors, fontSize, spacing, values, errors } from '../../constants';
+import { errorCodes } from '../../services/errorHandler';
 
-const SignupConfirmation = ({ handleSuccess, email }) => {
+const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     const [codeResent, setCodeResent] = useState(false)
     const [submitting, setSubmitting] = useState(false)
     const [codeResending, setCodeResending] = useState(false)
@@ -20,10 +21,14 @@ const SignupConfirmation = ({ handleSuccess, email }) => {
         handleSuccess()
     }
 
+    const handleResendError = useCallback((error) => {
+        setFormError(errorCodes?.[error.code]?.[locale] || errors.generic)
+    })
+
     const handleResend = useCallback(async () => {
         setFormDisable(true)
         setCodeResending(true)
-        await resendConfirmation(email, () => setCodeResent(true), () => setFormError(errors.generic))
+        await resendConfirmation(email, () => setCodeResent(true), handleResendError)
         setCodeResending(false)
         setFormDisable(false)
     })

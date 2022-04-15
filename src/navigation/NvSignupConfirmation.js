@@ -3,9 +3,10 @@ import SignupConfirmation from '../components/authentication/SignupConfirmation'
 import { screenNames } from '../constants';
 
 const NvSignupConfirmation = ({ navigation, route }) => {
-    const handleSuccess = useCallback(() => navigation.navigate(screenNames.login))
+    const locale = route?.params?.locale
+    const handleSuccess = useCallback(() => navigation.navigate(screenNames.home))
     return (
-        <SignupConfirmation handleSuccess={handleSuccess} email={route?.params?.email} />
+        <SignupConfirmation handleSuccess={handleSuccess} email={route?.params?.email} locale={locale} />
     )
 }
 
