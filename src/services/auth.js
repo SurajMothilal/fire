@@ -52,10 +52,31 @@ async function signOut(successCallback = () => {}, errorCallback = () => {}) {
     }
 }
 
+async function sendPasswordReset(email, successCallback = () => {}, errorCallback = () => {}) {
+    try {
+        await Auth.forgotPassword(email);
+        successCallback();
+    } catch (error) {
+        errorCallback(error);
+    }
+}
+
+async function passwordResetSubmit(email, code, newPassword, successCallback = () => {}, errorCallback = () => {}) {
+    try {
+        await Auth.forgotPasswordSubmit(email, code, newPassword);
+        successCallback();
+    } catch (error) {
+        console.log(error)
+        errorCallback(error);
+    }
+}
+
 export {
     signUp,
     login,
     resendConfirmation,
     confirmSignup,
-    signOut
+    signOut,
+    sendPasswordReset,
+    passwordResetSubmit
 }

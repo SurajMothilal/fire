@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     subText: {
         marginHorizontal: spacing.medium,
-        marginTop: spacing.xlight,
+        marginTop: spacing.medium,
         color: colors.black,
         fontSize: fontSize.medium,
         textAlign: 'center'

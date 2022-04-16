@@ -10,6 +10,9 @@ const errorCodes = {
     },
     'UserNotFoundException': {
         'en-CA': 'User does not exist'
+    },
+    'ExpiredCodeException': {
+        'en-CA': 'Invalid code provided, please request a code again.'
     }
 }
 

@@ -8,6 +8,9 @@ import NvSignupConfirmation from './src/navigation/NvSignupConfirmation';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { colors, screenNames } from './src/constants'
+import NvForgotPassword from './src/navigation/NvForgotPassword';
+import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit';
+import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessful'
 
 Amplify.configure(awsconfig)
 
@@ -35,6 +38,9 @@ const App = () => {
             <Stack.Screen name={screenNames.login} component={NvLogin} initialParams={initialParams} />
             <Stack.Screen name={screenNames.signup} component={NvSignup} initialParams={initialParams} />
             <Stack.Screen name={screenNames.signupconfirmation} component={NvSignupConfirmation} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.forgotPassword} component={NvForgotPassword} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.forgotPasswordSubmit} component={NvForgotPasswordSubmit} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.passwordResetSuccessful} component={NvPasswordResetSuccessful} initialParams={initialParams} />
             <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
           </Stack.Navigator>
       </NavigationContainer>

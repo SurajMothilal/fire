@@ -40,7 +40,10 @@ const screenNames = {
     signup: 'signup',
     home: 'home',
     login: 'login',
-    signupconfirmation: 'signupconfirmation'
+    signupconfirmation: 'signupconfirmation',
+    forgotPassword: 'forgotPassword',
+    forgotPasswordSubmit: 'forgotPasswordSubmit',
+    passwordResetSuccessful: 'passwordResetSuccessful'
 }
 
 const errors = {
