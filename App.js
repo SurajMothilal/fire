@@ -11,6 +11,7 @@ import { colors, screenNames } from './src/constants'
 import NvForgotPassword from './src/navigation/NvForgotPassword';
 import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit';
 import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessful'
+import NvAccountHome from './src/navigation/NvAccountHome'
 
 Amplify.configure(awsconfig)
 
@@ -30,7 +31,7 @@ const App = () => {
   return (
       <NavigationContainer theme={MyTheme}>
           <Stack.Navigator
-            initialRouteName={screenNames.login}
+            initialRouteName={screenNames.accountHome}
             screenOptions={{
               headerShown: false
             }}
@@ -41,6 +42,7 @@ const App = () => {
             <Stack.Screen name={screenNames.forgotPassword} component={NvForgotPassword} initialParams={initialParams} />
             <Stack.Screen name={screenNames.forgotPasswordSubmit} component={NvForgotPasswordSubmit} initialParams={initialParams} />
             <Stack.Screen name={screenNames.passwordResetSuccessful} component={NvPasswordResetSuccessful} initialParams={initialParams} />
+            <Stack.Screen name={screenNames.accountHome} component={NvAccountHome} initialParams={initialParams} />
             <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
           </Stack.Navigator>
       </NavigationContainer>

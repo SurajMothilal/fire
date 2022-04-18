@@ -6,6 +6,7 @@
     "android": "npx react-native run-android",
     "ios": "react-native run-ios",
     "start": "npx react-native start",
+    "server": "node backend/server.js",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -19,6 +20,8 @@
     "amazon-cognito-identity-js": "^5.2.8",
     "aws-amplify": "^4.3.17",
     "aws-amplify-react-native": "^6.0.3",
+    "express": "^4.17.3",
+    "pg": "^8.7.3",
     "react": "17.0.2",
     "react-hook-form": "^7.28.1",
     "react-native": "0.67.4",

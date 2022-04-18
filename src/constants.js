@@ -43,7 +43,8 @@ const screenNames = {
     signupconfirmation: 'signupconfirmation',
     forgotPassword: 'forgotPassword',
     forgotPasswordSubmit: 'forgotPasswordSubmit',
-    passwordResetSuccessful: 'passwordResetSuccessful'
+    passwordResetSuccessful: 'passwordResetSuccessful',
+    accountHome: 'accountHome'
 }
 
 const errors = {
