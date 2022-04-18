@@ -6,6 +6,13 @@ exports.seed = async function(knex) {
   ]);
   await knex('account').del()
   await knex('account').insert([
-    {id: knex.raw('uuid_generate_v4()'), name: 'RBC', balance: 23.12, currency: 'CAD', user_id: knex.select('id').table('user').first()}
+    {
+      id: knex.raw('uuid_generate_v4()'),
+      name: 'RBC',
+      balance: 23.12,
+      currency: 'CAD',
+      user_id: knex.select('id').table('user').first(),
+      type: 'investment'
+    }
   ]);
 };

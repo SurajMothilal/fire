@@ -4,6 +4,7 @@ exports.up = knex =>
     tbl.text('name', 128).notNullable()
     tbl.decimal('balance', 15, 2).notNullable()
     tbl.text('currency', 3).notNullable()
+    tbl.text('type', 50).notNullable()
     tbl.uuid('user_id').notNullable().references('id').inTable('user').onDelete('CASCADE')
 })
 
