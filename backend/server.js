@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
 const port = 3000
-var db = require('./pgconfig');
+const db = require('./data/db')
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
+app.get('/', async (req, res) => {
+    const users = await db('account')
+    res.json({ users })
 })
 
 app.listen(port, () => {
