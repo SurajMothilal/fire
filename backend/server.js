@@ -14,6 +14,15 @@ app.get('/accountsByUser', async (req, res, next) => {
     }
 })
 
+app.post('/user', async (req, res, next) => {
+    try {
+        const user = await createUser(req?.query?.id)
+        res.json({ user })
+    } catch (error) {
+        next(error)
+    }
+})
+
 app.use(errorMiddleware)
 
 app.listen(port, () => {
