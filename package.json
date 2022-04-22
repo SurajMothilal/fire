@@ -6,11 +6,13 @@
     "android": "npx react-native run-android",
     "ios": "react-native run-ios",
     "start": "npx react-native start",
+    "fresh-start": "rm -rf node_modules && yarn install && rm -rf /tmp/metro-* && npx react-native start",
     "server": "node backend/server.js",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@apollo/client": "^3.5.10",
     "@hookform/resolvers": "^2.8.8",
     "@react-native-async-storage/async-storage": "^1.17.0",
     "@react-native-community/netinfo": "^8.2.0",
@@ -20,7 +22,9 @@
     "amazon-cognito-identity-js": "^5.2.8",
     "aws-amplify": "^4.3.17",
     "aws-amplify-react-native": "^6.0.3",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "graphql": "^16.3.0",
     "pg": "^8.7.3",
     "react": "17.0.2",
     "react-hook-form": "^7.28.1",

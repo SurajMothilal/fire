@@ -1,30 +1,27 @@
 const logger = require('newrelic')
 const express = require('express')
 const errorMiddleware = require('./middleware/errorMiddleware')
-const app = express()
-const port = 3000
-const { getAccountsByUser } = require('./helpers/databaseHelper')
+const { ApolloServer } = require('apollo-server-express')
+const typeDefs = require('./graphql/typedefs')
+const  resolvers = require('./graphql/resolvers')
+const FireAPI = require('./graphql/datasources/fireApi')
 
-app.get('/accountsByUser', async (req, res, next) => {
-    try {
-        const accounts = await getAccountsByUser(req?.query?.id)
-        res.json({ accounts })
-    } catch (error) {
-        next(error)
-    }
-})
+async function startApolloServer() {
+    const app = express()
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      dataSources: () => ({
+        fireAPI: new FireAPI()
+      }),
+    });
+    await server.start();
 
-app.post('/user', async (req, res, next) => {
-    try {
-        const user = await createUser(req?.query?.id)
-        res.json({ user })
-    } catch (error) {
-        next(error)
-    }
-})
+    server.applyMiddleware({ app });
+    
+    await new Promise(resolve => app.listen({ port: 4000 }, resolve));
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    return { server, app };
+}
 
-app.use(errorMiddleware)
-
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`)
-})
+startApolloServer()

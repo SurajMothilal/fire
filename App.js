@@ -1,17 +1,29 @@
-import React from 'react';
+// require('dotenv').config()
+import React from 'react'
 import { Amplify } from 'aws-amplify'
 import awsconfig from './src/aws-exports'
 import NvLogin from './src/navigation/NvLogin'
 import NvSignup from './src/navigation/NvSignup'
 import NvHome from './src/navigation/NvHome'
-import NvSignupConfirmation from './src/navigation/NvSignupConfirmation';
+import NvSignupConfirmation from './src/navigation/NvSignupConfirmation'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { colors, screenNames } from './src/constants'
-import NvForgotPassword from './src/navigation/NvForgotPassword';
-import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit';
+import NvForgotPassword from './src/navigation/NvForgotPassword'
+import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit'
 import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessful'
 import NvAccountHome from './src/navigation/NvAccountHome'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider
+} from "@apollo/client"
+
+const apolloClient = new ApolloClient({
+  uri: "http://192.168.2.44:4000/graphql",
+  cache: new InMemoryCache()
+});
+
 
 Amplify.configure(awsconfig)
 
@@ -29,6 +41,7 @@ const App = () => {
     locale: 'en-CA'
   }
   return (
+    <ApolloProvider client={apolloClient}>
       <NavigationContainer theme={MyTheme}>
           <Stack.Navigator
             initialRouteName={screenNames.accountHome}
@@ -46,6 +59,8 @@ const App = () => {
             <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
           </Stack.Navigator>
       </NavigationContainer>
+    </ApolloProvider>
+  
   );
 };
 

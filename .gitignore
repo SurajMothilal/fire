@@ -80,3 +80,4 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 .env
+newrelic_agent.log
