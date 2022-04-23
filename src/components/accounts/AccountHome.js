@@ -2,16 +2,16 @@ import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 import ScreenTitle from '../common/ScreenTitle'
 import Button from '../common/Button'
-import { queries } from '../../services/graphqlQueryBuilder'
+import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
 import { spacing, colors, fontSize, values } from '../../constants'
 
 const AccountHome = ({ client }) => {
+    const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
     const { loading, error, data } = useQuery(
         queries.getAccountsByUser(),
-        { variables: { userId: "e5b4cea5-0950-4299-8852-6eb4b2c8b6cd" } }
+        { variables: { userId: loggedInUserObj.loggedInUserId }, skip: !loggedInUserObj }
     )
-    console.log(data)
     const handleAccountAdd = useCallback(() => {
         console.log('add')
     })

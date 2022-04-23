@@ -1,11 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import ScreenTitle from '../common/ScreenTitle';
-import Form from '../common/Form';
-import { confirmSignup, resendConfirmation } from '../../services/auth';
-import Button from '../common/Button';
-import { colors, fontSize, spacing, values, errors } from '../../constants';
-import { errorCodes } from '../../services/errorHandler';
+import React, { useCallback, useState } from 'react'
+import { Text, StyleSheet } from 'react-native'
+import ScreenTitle from '../common/ScreenTitle'
+import Form from '../common/Form'
+import { confirmSignup, resendConfirmation } from '../../services/auth'
+import Button from '../common/Button'
+import { loggedInUserId } from '../../graphql/cache'
+import { colors, fontSize, spacing, values, errors } from '../../constants'
+import { errorCodes } from '../../services/errorHandler'
 
 const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     const [codeResent, setCodeResent] = useState(false)
@@ -14,10 +15,11 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     const [formDisable, setFormDisable] = useState(false)
     const [formError, setFormError] = useState(null)
 
-    const unblockForm = () => {
+    const unblockForm = (user) => {
         setFormDisable(false)
         setSubmitting(false)
         setCodeResending(false)
+        loggedInUserId(user?.username)
         handleSuccess()
     }
 
@@ -35,7 +37,7 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     const handleSubmit = useCallback( async (data) => {
         setFormDisable(true)
         setSubmitting(true)
-        await confirmSignup(email, data.confirmation, () => unblockForm(), () => setFormError(errors.generic))
+        await confirmSignup(email, data.confirmation, (user) => unblockForm(user), () => setFormError(errors.generic))
     })
     const fields = [
         {

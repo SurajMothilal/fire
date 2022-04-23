@@ -6,7 +6,7 @@ const NvLogin = ({ navigation, route }) => {
     const handleSignUpPress = useCallback(() => navigation.navigate(screenNames.signup))
     const handleForgotPassword = useCallback(() => navigation.navigate(screenNames.forgotPassword))
     const handleUnconfirmedLogin = useCallback((email) => navigation.navigate(screenNames.signupconfirmation, { email }))
-    const handleLoginSuccess = useCallback(() => navigation.navigate(screenNames.home))
+    const handleLoginSuccess = useCallback(() => navigation.navigate(screenNames.accountHome))
     const locale = route?.params?.locale
     return (
         <Login

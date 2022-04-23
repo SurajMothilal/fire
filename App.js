@@ -13,15 +13,14 @@ import NvForgotPassword from './src/navigation/NvForgotPassword'
 import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit'
 import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessful'
 import NvAccountHome from './src/navigation/NvAccountHome'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider
-} from "@apollo/client"
+import { typeDefs } from './src/graphql/typedef'
+import { cache } from './src/graphql/cache'
+import { ApolloClient, ApolloProvider } from '@apollo/client'
 
 const apolloClient = new ApolloClient({
-  uri: "http://192.168.2.44:4000/graphql",
-  cache: new InMemoryCache()
+  uri: 'http://192.168.2.44:4000/graphql',
+  cache,
+  typeDefs
 });
 
 
@@ -44,7 +43,7 @@ const App = () => {
     <ApolloProvider client={apolloClient}>
       <NavigationContainer theme={MyTheme}>
           <Stack.Navigator
-            initialRouteName={screenNames.accountHome}
+            initialRouteName={screenNames.login}
             screenOptions={{
               headerShown: false
             }}

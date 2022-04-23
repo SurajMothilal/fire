@@ -1,10 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import { values } from '../constants';
-import { signOut } from '../services/auth';
-import Button from './common/Button';
+import React, { useCallback, useState } from 'react'
+import { values } from '../constants'
+import { useQuery } from '@apollo/client'
+import { signOut } from '../services/auth'
+import { localQueries } from '../services/graphqlQueryBuilder'
+import Button from './common/Button'
 
 const Home = ({ signOutSuccess }) => {
     const [signingOut, setSigningOut] = useState(false)
+    const { data } = useQuery(localQueries.loggedInUserId())
+    console.log(data)
     const handleSignOutSuccess = useCallback(() => {
         setSigningOut(false)
         signOutSuccess()

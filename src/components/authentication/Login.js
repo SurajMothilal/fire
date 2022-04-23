@@ -1,14 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import * as Yup from 'yup';
-import { View, Image, StyleSheet } from 'react-native';
-import { colors, spacing, values } from '../../constants';
+import React, { useState, useCallback } from 'react'
+import * as Yup from 'yup'
+import { View, Image, StyleSheet } from 'react-native'
+import { colors, spacing, values } from '../../constants'
 import { APPICON } from '../../assets'
-import { resendConfirmation } from '../../services/auth';
-import Button from '../common/Button';
-import Form from '../common/Form';
-import { login } from '../../services/auth';
-import { errors } from '../../constants';
-import { errorCodes } from '../../services/errorHandler';
+import { resendConfirmation } from '../../services/auth'
+import Button from '../common/Button'
+import Form from '../common/Form'
+import { login } from '../../services/auth'
+import { errors } from '../../constants'
+import { errorCodes } from '../../services/errorHandler'
+import { loggedInUserId } from '../../graphql/cache'
 
 
 const Login = ({
@@ -21,8 +22,8 @@ const Login = ({
     const [formError, setFormError] = useState(null)
     const [submitting, setSubmitting] = useState(false);
     const loginSuccess = useCallback(async (user) => {
-        console.log(user?.attributes)
         if(user?.attributes?.email_verified) {
+            loggedInUserId(user?.username)
             handleLoginSuccess()
         } else {
             await resendConfirmation(user?.attributes?.email)
