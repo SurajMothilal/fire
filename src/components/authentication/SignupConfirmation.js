@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { View, Dimensions, StyleSheet } from 'react-native'
+import * as Yup from 'yup';
+import Text from '../common/Text'
 import ScreenTitle from '../common/ScreenTitle'
 import Form from '../common/Form'
 import { confirmSignup, resendConfirmation } from '../../services/auth'
@@ -7,6 +9,8 @@ import Button from '../common/Button'
 import { loggedInUserId } from '../../graphql/cache'
 import { colors, fontSize, spacing, values, errors } from '../../constants'
 import { errorCodes } from '../../services/errorHandler'
+
+const windowHeight = Dimensions.get('window').height
 
 const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     const [codeResent, setCodeResent] = useState(false)
@@ -41,41 +45,47 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     })
     const fields = [
         {
-            rules: {
-                required: true
-            },
             name: 'confirmation',
             placeholder: 'Confirmation Code',
-            errorMessage: ' invalid'
         },
     ]
+
+    const validationSchema = Yup.object().shape({
+        confirmation: Yup.string()
+            .required('Confirmation code is required')  
+    });
+
     const defaultValues = {
         confirmation: ''
     }
-    const auxillaryComponent = codeResent ? <Text style={styles.confirmationResent}>Confirmation resent</Text> : null
-    return <>
-        <ScreenTitle title="Confirm Account" />
-        <Text style={styles.subText}>Enter the confirmation code sent to your email</Text>
-        <Form
-             defaultValues={defaultValues}
-             onFormSubmit={(data) => handleSubmit(data)}
-             onFormCancel={() => handleCancel()}
-             fields={fields}
-             primaryButtonText="Submit"
-             disabled={formDisable}
-             loading={submitting}
-             auxillaryComponent={auxillaryComponent}
-             onFocus={() => setCodeResent(false)}
-             formError={formError}
-        />
-        <Button
-            variant={values.secondary}
-            title="Resend Confirmation"
-            handlePress={() => handleResend()}
-            disabled={formDisable}
-            loading={codeResending}
-        />
-    </>
+
+    const auxillaryComponent = codeResent ? <Text style={styles.confirmationResent} title="Confirmation resent" /> : null
+    return (
+        <View style={styles.container}> 
+            <ScreenTitle title="Confirm Account" />
+            <Text style={styles.subText} title="Enter the confirmation code sent to your email" />
+            <Form
+                 defaultValues={defaultValues}
+                 onFormSubmit={(data) => handleSubmit(data)}
+                 onFormCancel={() => handleCancel()}
+                 fields={fields}
+                 primaryButtonText="Submit"
+                 disabled={formDisable}
+                 loading={submitting}
+                 auxillaryComponent={auxillaryComponent}
+                 onFocus={() => setCodeResent(false)}
+                 formError={formError}
+                 validationSchema={validationSchema}
+            />
+            <Button
+                variant={values.secondary}
+                title="Resend Confirmation"
+                handlePress={() => handleResend()}
+                disabled={formDisable}
+                loading={codeResending}
+            />
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -90,7 +100,10 @@ const styles = StyleSheet.create({
         marginTop: spacing.medium,
         color: colors.black,
         fontSize: fontSize.medium,
-        textAlign: 'center'
+    },
+    container: {
+        flex: 1,
+        marginTop: windowHeight * 0.075
     }
 })
 

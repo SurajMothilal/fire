@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import * as Yup from 'yup';
-import { Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import Text from '../common/Text';
 import ScreenTitle from '../common/ScreenTitle';
 import { colors, spacing, fontSize } from '../../constants';
 import Form from '../common/Form';
@@ -8,6 +9,8 @@ import { sendPasswordReset } from '../../services/auth';
 import { errors } from '../../constants';
 import { errorCodes } from '../../services/errorHandler';
 
+
+const windowHeight = Dimensions.get('window').height
 
 const ForgotPassword = ({
     handleSuccess,
@@ -46,9 +49,9 @@ const ForgotPassword = ({
     })
 
     return (
-        <>
+        <View style={styles.container}> 
             <ScreenTitle title="Forgot Password" />
-            <Text style={styles.subText}>Enter the email address associated with your account.</Text>
+            <Text style={styles.subText} title="Enter the email address associated with your account." />
             <Form
                 defaultValues={defaultValues}
                 onFormSubmit={(data) => handleSubmit(data)}
@@ -61,7 +64,7 @@ const ForgotPassword = ({
                 formError={formError}
                 validationSchema={validationSchema}
             />
-        </>
+        </View>
     )
 }
 
@@ -71,7 +74,10 @@ const styles = StyleSheet.create({
         marginTop: spacing.medium,
         color: colors.black,
         fontSize: fontSize.medium,
-        textAlign: 'center'
+    },
+    container: {
+        flex: 1,
+        marginTop: windowHeight * 0.075
     }
 })
 

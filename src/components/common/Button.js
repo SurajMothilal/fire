@@ -19,7 +19,7 @@ const Button = ({
     } else if (variant === values.link) {
         buttonStyle = styles.linkButtonStyle
     } else if (variant === values.secondary) {
-        loadingSpinnerColor = colors.green
+        loadingSpinnerColor = colors.black
         buttonStyle = styles.secondaryButton
     }
 
@@ -73,9 +73,7 @@ const styles = StyleSheet.create({
         opacity: 0.5
     },
     secondaryButton: {
-        borderColor: colors.green,
-        borderRadius: 30,
-        borderWidth: 1.5,
+        borderColor: colors.black,
         height: 50,
         marginHorizontal: spacing.xlight,
         justifyContent: 'center'
