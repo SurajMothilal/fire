@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useForm, Controller } from "react-hook-form";
 import Button from "./Button";
+import Text from '../common/Text';
 import { spacing, colors, values, fontSize } from "../../constants";
 
 
@@ -56,6 +57,7 @@ const Form = ({
                 const fieldName = fieldEntry.name
                 return (
                     <View key={fieldName}>
+                        <Text title={fieldEntry.placeholder} />
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -65,29 +67,28 @@ const Form = ({
                                         onBlur={onBlur}
                                         onChangeText={onChange}
                                         value={value}
-                                        placeholder={fieldEntry.placeholder}
-                                        placeholderTextColor={colors.grey}
                                         onFocus={onFocus}
+                                        autoCapitalize="none"
                                         secureTextEntry={hideSecret[fieldName]}
                                         underlineColorAndroid="transparent"
                                         {...register(fieldName)}
                                     />
                                     {fieldEntry.secure && (
                                         <TouchableOpacity onPress={() => toggleSecret(fieldName)} style={styles.iconContainer}>
-                                            <Icon style={styles.icon} name={hideSecret[fieldName] ? 'eye-slash' : 'eye'} size={20} color={colors.green} />
+                                            <Icon style={styles.icon} name={hideSecret[fieldName] ? 'eye-slash' : 'eye'} size={20} color={colors.black} />
                                         </TouchableOpacity>
                                     )}
                                 </View>
                             )}
                             name={fieldName}
                         />
-                        {errors[fieldName] ? <Text style={styles.text}>{errors[fieldName].message}</Text> : <Text style={styles.text}></Text>}
+                        {errors[fieldName] ? <Text style={styles.errorText} title={errors[fieldName].message} /> : <Text style={styles.errorText} title="" />}
                     </View>
                 )
             })}
         </View>
         {auxillaryComponent}
-        {formError && <Text style={styles.error}>{formError}</Text>}
+        {formError && <Text title={formError} style={styles.error} />}
         <>
             <Button title={primaryButtonText} handlePress={handleSubmit(onSubmit)} loading={loading} disabled={disabled} />
             {cancelButtonText && <Button title={cancelButtonText} handlePress={onFormCancel} variant={values.link}/>}
@@ -98,12 +99,7 @@ const Form = ({
 
 const styles = StyleSheet.create({
     input: {
-        marginHorizontal: spacing.xlight,
-        marginTop: spacing.xlight,
-        backgroundColor: colors.xlightgrey,
-        borderRadius: 10,
-        borderWidth: 0.5,
-        borderColor: colors.grey,
+        width: '100%',
         padding: spacing.xlight
     },
     formContainer: {
@@ -113,9 +109,12 @@ const styles = StyleSheet.create({
     container: {
         marginVertical: spacing.light
     },
-    text: {
+    errorText: {
         color: colors.red,
         marginHorizontal: spacing.xlight,
+        marginBottom: spacing.xlight,
+        marginTop: spacing.xxlight,
+        fontSize: fontSize.small
     },
     errorContainers: {
         height: 20,
@@ -136,9 +135,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         marginHorizontal: spacing.xlight,
         marginTop: spacing.xlight,
-        borderRadius: 10,
-        borderWidth: 0.5,
-        borderColor: colors.grey,
+        backgroundColor: colors.xlightgrey,
         paddingHorizontal: spacing.xxlight,
         paddingVertical: spacing.xxlight,
         paddingRight: spacing.xlarge,
@@ -153,12 +150,7 @@ const styles = StyleSheet.create({
     iconContainer: {
         position: 'absolute',
         right: 0
-    },
-    input: {
-        paddingVertical: spacing.xlight,
-        paddingRight: spacing.medium,
-        backgroundColor: colors.white
-    },
+    }
 })
 
 export default Form;

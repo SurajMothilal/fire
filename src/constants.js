@@ -30,6 +30,10 @@ const fontWeight = {
     bold: '500'
 }
 
+const fontFamily = {
+    default: 'Lato-Regular'
+}
+
 const values = {
     primary: 'primary',
     secondary: 'secondary',
@@ -58,5 +62,6 @@ export {
     fontWeight,
     values,
     screenNames,
+    fontFamily,
     errors
 }

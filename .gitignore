@@ -59,6 +59,9 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+.env
+newrelic_agent.log
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -79,5 +82,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-.env
-newrelic_agent.log
