@@ -19,6 +19,10 @@ const colors = {
     purple: '#9262F9'
 }
 
+const icons = {
+    account: 'book'
+}
+
 const fontSize = {
     xlarge: 25,
     large: 21,
@@ -63,5 +67,6 @@ export {
     values,
     screenNames,
     fontFamily,
+    icons,
     errors
 }

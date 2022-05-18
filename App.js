@@ -43,7 +43,7 @@ const App = () => {
     <ApolloProvider client={apolloClient}>
       <NavigationContainer theme={MyTheme}>
           <Stack.Navigator
-            initialRouteName={screenNames.signupconfirmation}
+            initialRouteName={screenNames.home}
             screenOptions={{
               headerShown: false
             }}
@@ -62,7 +62,6 @@ const App = () => {
   
   );
 };
-
 
 
 export default App;

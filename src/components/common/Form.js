@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -25,11 +25,11 @@ const Form = ({
     fields = [],
     primaryButtonText,
     cancelButtonText,
-    loading = false,
     disabled = false,
     auxillaryComponent,
     formError,
     validationSchema = null,
+    additionalComponents = [],
     onFocus = () => {}
 }) => {
   const secretFields = fields.map((f) => f.secure ? f.name : undefined).filter(x => x)
@@ -38,18 +38,39 @@ const Form = ({
         secretFields.length > 0 ? secretFields.reduce((a, v) => ({ ...a, [v]: true}), {}) : {}
     )
   })
-  const { register, control, handleSubmit, formState: { errors } } = useForm({
+  const { register, control, handleSubmit, formState: { errors, isDirty, isSubmitting, isSubmitSuccessful }, clearErrors } = useForm({
     defaultValues,
     ...(validationSchema ? { resolver: yupResolver(validationSchema)} : {})
   });
+  const propInjectedAdditionalComponents = additionalComponents.map((Component) => {
+      return (
+        <Component.component
+            {...Component.props}
+            disabled={isSubmitting || Component.props.disabled}
+            loading={isSubmitting || Component.props.loading}
+            handlePress={() => {
+                clearErrors()
+                Component.props.handlePress
+            }}
+        />
+      )
+  })
   const toggleSecret = useCallback((fieldname) => {
     setHideSecret({
         ...hideSecret,
         [fieldname]: !hideSecret[fieldname]
     })
   })
-  const onSubmit = data => onFormSubmit(data);
 
+  const onSubmit = data => {
+      onFormSubmit(data);
+      clearErrors()
+  }
+
+  useEffect(() => {
+
+  }, [isSubmitSuccessful])
+  console.log(isDirty)
   return (
     <View style={styles.formContainer}>
         <View style={styles.container}>
@@ -90,7 +111,8 @@ const Form = ({
         {auxillaryComponent}
         {formError && <Text title={formError} style={styles.error} />}
         <>
-            <Button title={primaryButtonText} handlePress={handleSubmit(onSubmit)} loading={loading} disabled={disabled} />
+            <Button title={primaryButtonText} handlePress={handleSubmit(onSubmit)} loading={isSubmitting} disabled={isSubmitting} />
+            {propInjectedAdditionalComponents}
             {cancelButtonText && <Button title={cancelButtonText} handlePress={onFormCancel} variant={values.link}/>}
         </>
     </View>

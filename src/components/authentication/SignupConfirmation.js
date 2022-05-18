@@ -60,6 +60,18 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
     }
 
     const auxillaryComponent = codeResent ? <Text style={styles.confirmationResent} title="Confirmation resent" /> : null
+    const additionalFormButtons = [
+        {
+            component: Button,
+            props: {
+                variant: values.secondary,
+                title: "Resend Confirmation",
+                handlePress: () => handleResend(),
+                loading: codeResending,
+                disabled: codeResending
+            }
+        }
+    ]
     return (
         <View style={styles.container}> 
             <ScreenTitle title="Confirm Account" />
@@ -76,13 +88,7 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
                  onFocus={() => setCodeResent(false)}
                  formError={formError}
                  validationSchema={validationSchema}
-            />
-            <Button
-                variant={values.secondary}
-                title="Resend Confirmation"
-                handlePress={() => handleResend()}
-                disabled={formDisable}
-                loading={codeResending}
+                 additionalComponents={additionalFormButtons}
             />
         </View>
     )
