@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
-import ScreenTitle from '../common/ScreenTitle'
+import Subtitle from '../common/Subtitle'
 import Button from '../common/Button'
+import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
 import { spacing, colors, fontSize, values } from '../../constants'
@@ -18,21 +19,25 @@ const AccountHome = ({ client }) => {
     const handleAccountEdit = useCallback(() => {
         console.log('edit')
     })
+
     return (
         <>
-            <View style={styles.headerContainer}>
-                <Button
-                    variant={values.link}
-                    title="Edit"
-                    handlePress={() => handleAccountEdit()}
-                />
-                <ScreenTitle title="Accounts" />
-                <Button
-                    variant={values.link}
-                    title="Add"
-                    handlePress={() => handleAccountAdd()}
-                />
-            </View> 
+           <View>
+                <View style={styles.headerContainer}>
+                    <Button
+                        variant={values.link}
+                        title="-"
+                        handlePress={() => handleAccountEdit()}
+                    />
+                    <Subtitle title="Accounts" />
+                    <Button
+                        variant={values.link}
+                        title="+"
+                        handlePress={() => handleAccountAdd()}
+                    />
+                </View>
+                <AccountList />
+            </View>
         </>
     )
 }

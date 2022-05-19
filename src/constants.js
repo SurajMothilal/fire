@@ -7,6 +7,12 @@ const spacing = {
     xlarge: 40
 }
 
+const accountTypes = {
+    investment: 'investment',
+    debt: 'debt',
+    cash: 'cash'
+}
+
 const colors = {
     black: 'black',
     xlightgrey: '#F6F6F6',
@@ -68,5 +74,6 @@ export {
     screenNames,
     fontFamily,
     icons,
-    errors
+    errors,
+    accountTypes
 }
