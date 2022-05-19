@@ -9,7 +9,7 @@ const Subtitle = ({ title }) => {
 const styles = StyleSheet.create({
     title: {
         fontWeight: fontWeight.bold,
-        fontSize: fontSize.medium,
+        fontSize: fontSize.large,
         fontFamily: fontFamily.default,
         marginLeft: spacing.xlight,
         textAlign: 'left',

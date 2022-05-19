@@ -6,6 +6,7 @@ import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
 import { spacing, colors, fontSize, values } from '../../constants'
+import AccountPie from './AccountPie'
 
 const AccountHome = ({ client }) => {
     const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
@@ -22,23 +23,22 @@ const AccountHome = ({ client }) => {
 
     return (
         <>
-           <View>
-                <View style={styles.headerContainer}>
-                    <Button
-                        variant={values.link}
-                        title="-"
-                        handlePress={() => handleAccountEdit()}
-                    />
-                    <Subtitle title="Accounts" />
-                    <Button
-                        variant={values.link}
-                        title="+"
-                        handlePress={() => handleAccountAdd()}
-                    />
-                </View>
-                <AccountList />
+            <View style={styles.headerContainer}>
+                <Button
+                    variant={values.link}
+                    title="-"
+                    handlePress={() => handleAccountEdit()}
+                />
+                <Subtitle title="Accounts" />
+                <Button
+                    variant={values.link}
+                    title="+"
+                    handlePress={() => handleAccountAdd()}
+                />
             </View>
-        </>
+            <AccountPie />
+            <AccountList />
+    </>
     )
 }
 
@@ -53,7 +53,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'baseline',
         justifyContent: 'space-between',
-        marginHorizontal: spacing.medium
+        marginHorizontal: spacing.medium,
+        paddingTop: spacing.xlight
+    },
+    pieContainer: {
     }
 })
 
