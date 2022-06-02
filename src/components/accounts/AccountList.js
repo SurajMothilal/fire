@@ -1,7 +1,8 @@
-import React from 'react'
-import { FlatList, TouchableHighlight, View, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { SectionList, TouchableHighlight, View, StyleSheet } from 'react-native'
 import Text from '../../components/common/Text'
-import { accountTypes, colors, spacing } from '../../constants';
+import SectionTitle from '../common/SectionTitle';
+import { accountTypes, colors, spacing, sectionHeaders } from '../../constants';
 
 const renderItem = ({ item }) => {
     let backgroundColor
@@ -26,37 +27,40 @@ const renderItem = ({ item }) => {
     )
   };
 
-const AccountList = () => {
-    const DATA = [
-        {
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            name: "RBC Checking Account",
-            type: 'investment',
-            balance: 2012.12,
-            currency: 'CAD'
-        },
-        {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-            name: "TD Savings account",
-            type: 'debt',
-            balance: 12012.12,
-            currency: 'CAD'
-        },
-        {
-            id: "58694a0f-3da1-471f-bd96-145571e29d72",
-            name: "RBC",
-            type: 'cash',
-            balance: 2042.02,
-            currency: 'CAD'
-        },
-    ];
+const AccountList = ({data}) => {
+    const investments = data.filter((dataPoint) =>  dataPoint.type === accountTypes.investment)
+    const cash = data.filter((dataPoint) =>  dataPoint.type === accountTypes.cash)
+    const debt = data.filter((dataPoint) =>  dataPoint.type === accountTypes.debt)
+    const updatedData = []
+    if (investments) {
+        updatedData.push({
+            title: accountTypes.investment,
+            data: investments
+        })
+    }
+    if (cash) {
+        updatedData.push({
+            title: accountTypes.cash,
+            data: cash
+        })
+    }
+    if (debt) {
+        updatedData.push({
+            title: accountTypes.debt,
+            data: debt
+        })
+    }
     return (
-        <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={() => <View style={styles.lineSeparator} />}
-        />
+        <>
+           <SectionList
+                sections={updatedData}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                renderSectionHeader={({ section: { title } }) => (
+                    <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
+                )}
+            />
+        </>
     )
 }
 
@@ -67,11 +71,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: spacing.light,
         paddingVertical: spacing.xlight,
     },
-    lineSeparator: {
-        borderBottomColor: colors.lightgrey,
-        borderBottomWidth: 1,
-        marginHorizontal: spacing.xlight
-    },  
     dot: {
         alignSelf: 'center',
         height: 10,
@@ -83,6 +82,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
+    },
+    listSections: {
+        textAlign: 'left'
     }
 })
 

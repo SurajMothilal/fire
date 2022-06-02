@@ -33,7 +33,15 @@ const fontSize = {
     xlarge: 25,
     large: 21,
     medium: 17,
-    small: 15
+    small: 15,
+    xsmall: 12
+}
+
+const sectionHeaders = {
+    investment: 'Investments',
+    debt: 'Debt',
+    cash: 'Cash',
+    accounts: 'Accounts'
 }
 
 const fontWeight = {
@@ -48,6 +56,7 @@ const values = {
     primary: 'primary',
     secondary: 'secondary',
     link: 'link',
+    icon: 'icon'
 }
 
 const screenNames = {
@@ -75,5 +84,6 @@ export {
     fontFamily,
     icons,
     errors,
-    accountTypes
+    accountTypes,
+    sectionHeaders
 }

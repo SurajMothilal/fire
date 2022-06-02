@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { spacing, colors, fontSize, fontWeight, fontFamily, values } from '../../constants';
-
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const Button = ({
     title,
@@ -10,7 +10,9 @@ const Button = ({
     disabled = false,
     loading = false,
     containerStyle,
-    textStyle = {}
+    textStyle = {},
+    iconName,
+    iconColor
 }) => {
     let buttonStyle = {}
     let loadingSpinnerColor = colors.white
@@ -21,7 +23,26 @@ const Button = ({
     } else if (variant === values.secondary) {
         loadingSpinnerColor = colors.black
         buttonStyle = styles.secondaryButton
+    } else if (variant === values.icon) {
+        buttonStyle = styles.iconButton
     }
+
+    const renderedElement = variant === values.icon
+        ?  <Icon name={iconName} size={25} color={iconColor || colors.black} />
+        : 
+            <Text 
+                style={
+                    {
+                        ...styles.text, 
+                        ...(variant !== values.primary ? { color: colors.black } : { color: colors.white } ),
+                        ...(disabled ? styles.disabledText : {}),
+                        ...textStyle
+                    }
+                }
+            >
+                {title}
+            </Text>
+        
 
     return (
         <TouchableOpacity
@@ -32,21 +53,8 @@ const Button = ({
         >
             {
                 loading
-                ?
-                    <ActivityIndicator color={loadingSpinnerColor} size="large" />
-                :
-                    <Text 
-                        style={
-                            {
-                                ...styles.text, 
-                                ...(variant !== values.primary ? { color: colors.black } : { color: colors.white } ),
-                                ...(disabled ? styles.disabledText : {}),
-                                ...textStyle
-                            }
-                        }
-                    >
-                        {title}
-                    </Text>
+                    ? <ActivityIndicator color={loadingSpinnerColor} size="large" />
+                    : renderedElement
             }
           
         </TouchableOpacity> 
