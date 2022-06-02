@@ -26,7 +26,12 @@ const colors = {
 }
 
 const icons = {
-    account: 'book'
+    account: 'card-outline',
+    add: 'add-outline',
+    filter: 'options-outline',
+    networth: 'trending-up-outline',
+    budget: 'wallet-outline',
+    profile: 'person-outline'
 }
 
 const fontSize = {
@@ -69,7 +74,10 @@ const screenNames = {
     forgotPassword: 'forgotPassword',
     forgotPasswordSubmit: 'forgotPasswordSubmit',
     passwordResetSuccessful: 'passwordResetSuccessful',
-    accountHome: 'accountHome'
+    accountHome: 'accountHome',
+    networth: 'fire',
+    budget: 'budget',
+    profile: 'profile'
 }
 
 const errors = {

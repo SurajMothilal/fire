@@ -3,25 +3,26 @@ import { StyleSheet, View } from "react-native"
 import Text from '../common/Text'
 import { VictoryPie } from "victory-native"
 import SectionTitle from "../common/SectionTitle"
-import { colors, fontSize, fontWeight, sectionHeaders } from "../../constants"
+import { colors, fontSize, fontWeight, sectionHeaders, spacing } from "../../constants"
+import { calculateSavingsRatePercentage } from "../../services/financeHelper"
 
 const AccountPie = ({ investment, cash, debt }) => {
     return (
         <View style={styles.container}>
             <View style={styles.meta}>
                 <View style={styles.centerText}>
-                    <Text style={styles.cash} title={'9%'} />
+                    <Text style={styles.cash} title={calculateSavingsRatePercentage(cash, investment, debt)} />
                     <SectionTitle title={sectionHeaders.savingsRate.toUpperCase()} style={styles.savingsRate} />
                 </View>
             </View>
             <VictoryPie
-                innerRadius={90}
+                innerRadius={95}
                 cornerRadius={5}
                 padAngle={4}
                 labels={() => null}
                 colorScale={[ colors.green, colors.purple, colors.red ]}
-                height={300}
-                width={300}
+                height={310}
+                width={310}
                 data={[
                     { x: `${cash}%`, y: cash },
                     { x: `${investment}%`, y: investment },
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     centerText: {
+        marginTop: spacing.medium,
         alignItems: 'center',
         justifyContent: 'center'
     },

@@ -6,7 +6,7 @@ import LineDivider from '../common/LineDivider'
 import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
-import { accountTypes, spacing, colors, fontSize, sectionHeaders, values } from '../../constants'
+import { accountTypes, spacing, colors, fontSize, sectionHeaders, values, icons } from '../../constants'
 import AccountPie from './AccountPie'
 
 const AccountHome = ({ client }) => {
@@ -96,19 +96,19 @@ const AccountHome = ({ client }) => {
             <View style={styles.headerContainer}>
                 <Button
                     variant={values.icon}
-                    iconName="options-outline"
+                    iconName={icons.filter}
                     handlePress={() => null}
                 />
                 <CommonScreenTitle title={sectionHeaders.accounts} style={styles.listSections} />
                 <Button
                     variant={values.icon}
-                    iconName="add-outline"
+                    iconName={icons.add}
                     handlePress={() => null}
                 />
             </View>
             <LineDivider />
             <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} />
-            <AccountList data={DATA} />
+            <AccountList data={DATA}/>
         </SafeAreaView>
     )
 }

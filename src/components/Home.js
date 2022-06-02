@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client'
 import { signOut } from '../services/auth'
 import { localQueries } from '../services/graphqlQueryBuilder'
 import { NavigationContainer } from '@react-navigation/native'
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NvAccountHome from '../navigation/NvAccountHome'
 
@@ -44,6 +44,12 @@ const Home = ({ signOutSuccess }) =>  {
 
             if (route.name === screenNames.accountHome) {
                 iconName = icons.account
+            } else if (route.name === screenNames.networth) {
+                iconName = icons.networth
+            } else if (route.name === screenNames.budget) {
+                iconName = icons.budget
+            } else if (route.name === screenNames.profile) {
+                iconName = icons.profile
             }
             // You can return any component that you like here!
             return <Icon name={iconName} size={25} color={color} />;
@@ -53,6 +59,9 @@ const Home = ({ signOutSuccess }) =>  {
         })}
     >
         <Tab.Screen name={screenNames.accountHome} component={NvAccountHome} />
+        <Tab.Screen name={screenNames.networth} component={NvAccountHome} />
+        <Tab.Screen name={screenNames.budget} component={NvAccountHome} />
+        <Tab.Screen name={screenNames.profile} component={NvAccountHome} />
     </Tab.Navigator>
   );
 }
