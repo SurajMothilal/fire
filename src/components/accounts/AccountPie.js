@@ -2,20 +2,20 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import Text from '../common/Text'
 import { VictoryPie } from "victory-native"
-import { colors, fontSize, fontWeight } from "../../constants"
+import SectionTitle from "../common/SectionTitle"
+import { colors, fontSize, fontWeight, sectionHeaders } from "../../constants"
 
 const AccountPie = ({ investment, cash, debt }) => {
     return (
         <View style={styles.container}>
             <View style={styles.meta}>
                 <View style={styles.centerText}>
-                    <Text style={styles.cash} title={cash} />
-                    <Text style={styles.investment} title={investment} />
-                    <Text style={styles.debt} title={debt}  />
+                    <Text style={styles.cash} title={'9%'} />
+                    <SectionTitle title={sectionHeaders.savingsRate.toUpperCase()} style={styles.savingsRate} />
                 </View>
             </View>
             <VictoryPie
-                innerRadius={85}
+                innerRadius={90}
                 cornerRadius={5}
                 padAngle={4}
                 labels={() => null}
@@ -39,14 +39,13 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     centerText: {
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
     },
     cash: {
-        color: colors.green,
+        color: colors.black,
         fontWeight: fontWeight.bold,
-        fontSize: fontSize.large
+        fontSize: fontSize.xxlarge,
     },
     investment: {
         color: colors.purple,
@@ -63,10 +62,15 @@ const styles = StyleSheet.create({
     },
     meta: {
         position: 'absolute',
-        top: '45.5%',
-        right: 0,
+        top: 0,
+        bottom: 0,
         left: 0,
         right: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    savingsRate: {
+        color: colors.grey
     }
 })
 

@@ -14,7 +14,7 @@ const accountTypes = {
 }
 
 const colors = {
-    black: 'black',
+    black: '#2b2b2b',
     xlightgrey: '#F6F6F6',
     lightgrey: '#E8E8E8',
     grey: '#BDBDBD',
@@ -30,6 +30,7 @@ const icons = {
 }
 
 const fontSize = {
+    xxlarge: 35,
     xlarge: 25,
     large: 21,
     medium: 17,
@@ -41,7 +42,8 @@ const sectionHeaders = {
     investment: 'Investments',
     debt: 'Debt',
     cash: 'Cash',
-    accounts: 'Accounts'
+    accounts: 'Accounts',
+    savingsRate: 'Savings Rate'
 }
 
 const fontWeight = {
