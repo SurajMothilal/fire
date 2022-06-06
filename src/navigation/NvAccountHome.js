@@ -4,8 +4,9 @@ import { screenNames } from '../constants';
 
 const NvAccountHome = ({ navigation, route }) => {
     const locale = route?.params?.locale
+    const handleAddAccount = useCallback(() => navigation.navigate(screenNames.addAccount))
     return (
-        <AccountHome locale={locale} />
+        <AccountHome locale={locale} onAddAccount={handleAddAccount} />
     )
 }
 

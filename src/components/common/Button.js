@@ -18,6 +18,8 @@ const Button = ({
     let loadingSpinnerColor = colors.white
     if (variant === values.primary) {
         buttonStyle = { ...styles.button, ...(variant === values.primary ? { backgroundColor: colors.black } : {}) }
+    } else if (variant === values.primaryGrey) {
+        buttonStyle = { ...styles.primaryGrey }
     } else if (variant === values.link) {
         buttonStyle = styles.linkButtonStyle
     } else if (variant === values.secondary) {
@@ -67,6 +69,14 @@ const styles = StyleSheet.create({
         marginHorizontal: spacing.xlight,
         height: 50,
         justifyContent: 'center'
+    },
+    primaryGrey: {
+        backgroundColor: colors.xlightgrey,
+        paddingVertical: spacing.xlight,
+        borderRadius: 10,
+        paddingHorizontal: spacing.light,
+        marginHorizontal: spacing.xlight,
+        marginTop: spacing.xlight
     },
     linkButtonStyle: {
         marginVertical: spacing.xlight

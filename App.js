@@ -16,6 +16,8 @@ import NvAccountHome from './src/navigation/NvAccountHome'
 import { typeDefs } from './src/graphql/typedef'
 import { cache } from './src/graphql/cache'
 import { ApolloClient, ApolloProvider } from '@apollo/client'
+import { Host } from 'react-native-portalize'
+import NvAddAccount from './src/navigation/NvAddAccount'
 
 const apolloClient = new ApolloClient({
   uri: 'http://192.168.2.44:4000/graphql',
@@ -40,26 +42,26 @@ const App = () => {
     locale: 'en-CA'
   }
   return (
-    <ApolloProvider client={apolloClient}>
-      <NavigationContainer theme={MyTheme}>
-          <Stack.Navigator
-            initialRouteName={screenNames.home}
-            screenOptions={{
-              headerShown: false
-            }}
-          >
-            <Stack.Screen name={screenNames.login} component={NvLogin} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.signup} component={NvSignup} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.signupconfirmation} component={NvSignupConfirmation} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.forgotPassword} component={NvForgotPassword} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.forgotPasswordSubmit} component={NvForgotPasswordSubmit} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.passwordResetSuccessful} component={NvPasswordResetSuccessful} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.accountHome} component={NvAccountHome} initialParams={initialParams} />
-            <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
-          </Stack.Navigator>
-      </NavigationContainer>
-    </ApolloProvider>
-  
+      <ApolloProvider client={apolloClient}>
+        <NavigationContainer theme={MyTheme}>
+            <Stack.Navigator
+              initialRouteName={screenNames.home}
+              screenOptions={{
+                headerShown: false
+              }}
+            >
+              <Stack.Screen name={screenNames.login} component={NvLogin} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.signup} component={NvSignup} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.signupconfirmation} component={NvSignupConfirmation} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.forgotPassword} component={NvForgotPassword} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.forgotPasswordSubmit} component={NvForgotPasswordSubmit} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.passwordResetSuccessful} component={NvPasswordResetSuccessful} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.accountHome} component={NvAccountHome} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.home} component={NvHome} initialParams={initialParams} />
+              <Stack.Screen name={screenNames.addAccount} component={NvAddAccount} initialParams={initialParams} />
+            </Stack.Navigator>
+        </NavigationContainer>
+      </ApolloProvider>  
   );
 };
 

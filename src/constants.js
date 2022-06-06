@@ -31,7 +31,12 @@ const icons = {
     filter: 'options-outline',
     networth: 'trending-up-outline',
     budget: 'wallet-outline',
-    profile: 'person-outline'
+    profile: 'person-outline',
+    back: 'chevron-back-outline',
+    eye: 'eye-outline',
+    eyeClosed: 'eye-off-outline',
+    down: 'chevron-down-outline',
+    up: 'chevron-up-outline'
 }
 
 const fontSize = {
@@ -43,12 +48,18 @@ const fontSize = {
     xsmall: 12
 }
 
+const buttonNames = {
+    addAccount: 'Add Account',
+    cancel: 'Cancel'
+}
+
 const sectionHeaders = {
     investment: 'Investments',
     debt: 'Debt',
     cash: 'Cash',
     accounts: 'Accounts',
-    savingsRate: 'Savings Rate'
+    savingsRate: 'Savings Rate',
+    addAccount: 'Add Account'
 }
 
 const fontWeight = {
@@ -61,9 +72,17 @@ const fontFamily = {
 
 const values = {
     primary: 'primary',
+    primaryGrey: 'primaryGrey',
     secondary: 'secondary',
     link: 'link',
     icon: 'icon'
+}
+
+const timeline = {
+    year: 'Year',
+    semiYear: '6 Months',
+    lastMonth: 'Last Month',
+    thisWeek: 'This Week'
 }
 
 const screenNames = {
@@ -77,11 +96,16 @@ const screenNames = {
     accountHome: 'accountHome',
     networth: 'fire',
     budget: 'budget',
-    profile: 'profile'
+    profile: 'profile',
+    addAccount: 'addAccount'
 }
 
 const errors = {
     generic: 'Something went wrong. Please try again'
+}
+
+const formFieldTypes = {
+    dropdown: 'dropdown'
 }
 
 export {
@@ -95,5 +119,8 @@ export {
     icons,
     errors,
     accountTypes,
-    sectionHeaders
+    sectionHeaders,
+    timeline,
+    buttonNames,
+    formFieldTypes
 }

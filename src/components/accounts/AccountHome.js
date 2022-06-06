@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
-import CommonScreenTitle from '../common/CommonScreenTitle'
-import Button from '../common/Button'
-import LineDivider from '../common/LineDivider'
 import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
 import { accountTypes, spacing, colors, fontSize, sectionHeaders, values, icons } from '../../constants'
 import AccountPie from './AccountPie'
+import ScreenHeader from '../common/ScreenHeader'
 
-const AccountHome = ({ client }) => {
+const AccountHome = ({ client, onAddAccount }) => {
     const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
     const { loading, error, data } = useQuery(
         queries.getAccountsByUser(),
@@ -21,6 +19,7 @@ const AccountHome = ({ client }) => {
         cashPercentage: 0,
         debtPercentage: 0
     })
+    // const [selectedTimeline, setSelectedTimeline] = useState(timeline.thisWeek)
     const DATA = [
         {
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -60,11 +59,23 @@ const AccountHome = ({ client }) => {
     ];
 
     const handleAccountAdd = useCallback(() => {
-        console.log('add')
+        onAddAccount()
     })
     const handleAccountEdit = useCallback(() => {
         console.log('edit')
     })
+
+    const leftButtonProps = {
+        variant: values.icon,
+        iconName: icons.filter,
+        handlePress: () => null
+    }
+
+    const rightButtonProps = {
+        variant: values.icon,
+        iconName: icons.add,
+        handlePress: () => handleAccountAdd()
+    }
 
 
     useEffect(() => {
@@ -93,41 +104,52 @@ const AccountHome = ({ client }) => {
     }, [])
     return (
         <SafeAreaView>
-            <View style={styles.headerContainer}>
+            <ScreenHeader title={sectionHeaders.accounts} leftButtonProps={leftButtonProps} rightButtonProps={rightButtonProps} />
+            {/* <ScrollView style={styles.timeline} showsHorizontalScrollIndicator={false} horizontal>
                 <Button
-                    variant={values.icon}
-                    iconName={icons.filter}
-                    handlePress={() => null}
+                    variant={values.primaryGrey}
+                    title={timeline.year}
+                    handlePress={() => handleForgotPasswordPress()}
+                    textStyle={styles.timelineButtonText}
                 />
-                <CommonScreenTitle title={sectionHeaders.accounts} style={styles.listSections} />
                 <Button
-                    variant={values.icon}
-                    iconName={icons.add}
-                    handlePress={() => null}
+                    variant={values.primaryGrey}
+                    title={timeline.semiYear}
+                    handlePress={() => handleForgotPasswordPress()}
+                    textStyle={styles.timelineButtonText}
                 />
-            </View>
-            <LineDivider />
+                <Button
+                    variant={values.primaryGrey}
+                    title={timeline.lastMonth}
+                    handlePress={() => handleForgotPasswordPress()}
+                    textStyle={styles.timelineButtonText}
+                />
+                <Button
+                    variant={values.primaryGrey}
+                    title={timeline.thisWeek}
+                    handlePress={() => handleForgotPasswordPress()}
+                    textStyle={styles.timelineButtonText}
+                />
+            </ScrollView> */}
             <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} />
             <AccountList data={DATA}/>
         </SafeAreaView>
     )
 }
 
-const styles = StyleSheet.create({
-    subText: {
-        margin: spacing.medium,
-        color: colors.black,
-        fontSize: fontSize.medium,
-        textAlign: 'center'
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-        justifyContent: 'space-between',
-        marginHorizontal: spacing.xlight,
-    },
-    pieContainer: {
-    }
-})
+// const styles = StyleSheet.create({
+//     subText: {
+//         margin: spacing.medium,
+//         color: colors.black,
+//         fontSize: fontSize.medium,
+//         textAlign: 'center'
+//     },
+//     timeline: {
+//         flexDirection: 'row'
+//     },
+//     timelineButtonText: {
+//         fontSize: fontSize.xsmall
+//     }
+// })
 
 export default AccountHome

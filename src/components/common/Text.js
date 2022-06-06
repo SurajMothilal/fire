@@ -8,7 +8,7 @@ const Text = ({ title, style }) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         color: colors.black,
         marginLeft: spacing.xlight,
         fontFamily: fontFamily.default
