@@ -3,7 +3,7 @@ import { SafeAreaView, View } from 'react-native'
 import * as Yup from 'yup';
 import ScreenHeader from '../common/ScreenHeader'
 import Form from '../common/Form'
-import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountTypes } from '../../constants'
+import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountTypes, currencyCodes } from '../../constants'
 
 const AddAccount = ({ onBack }) => {
     const [formError, setFormError] = useState(null)
@@ -35,17 +35,22 @@ const AddAccount = ({ onBack }) => {
         },
         {
             name: 'currency',
-            placeholder: 'Currency',
-        }
+            type: formFieldTypes.dropdown,
+            list: [currencyCodes.CAD, currencyCodes.USD],
+            placeholder: 'Currency'
+        },
     ]
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .required('Account Name is required'),
+            .required('Account Name is required')
+            .min(3, 'Name must be atleast 3 characters')
+            .max(30, 'Name must be less than 30 characters'),
         type: Yup.string()
             .required('Type is required'),
         balance: Yup.string()
-            .required('Current Balance is required'),
+            .required('Current Balance is required')
+            .matches(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/, 'Enter a valid balance'),
         currency: Yup.string()
             .required('Currency is required')            
     });

@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     },
     dropdownItem: {
         backgroundColor: colors.white,
+        marginVertical: spacing.xlight
     }
 })
 

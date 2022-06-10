@@ -39,6 +39,11 @@ const icons = {
     up: 'chevron-up-outline'
 }
 
+const currencyCodes = {
+    CAD: 'CAD',
+    USD: 'USD'
+}
+
 const fontSize = {
     xxlarge: 35,
     xlarge: 25,
@@ -122,5 +127,6 @@ export {
     sectionHeaders,
     timeline,
     buttonNames,
-    formFieldTypes
+    formFieldTypes,
+    currencyCodes
 }
