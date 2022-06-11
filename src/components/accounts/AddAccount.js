@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { SafeAreaView, View } from 'react-native'
+import { useMutationHook, mutations } from '../../services/graphqlQueryBuilder'
 import * as Yup from 'yup';
 import ScreenHeader from '../common/ScreenHeader'
 import Form from '../common/Form'
@@ -8,9 +9,14 @@ import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountType
 const AddAccount = ({ onBack }) => {
     const [formError, setFormError] = useState(null)
     const [submitting, setSubmitting] = useState(false)
+    const [addAccount, { data, loading, error }] = useMutationHook(mutations.saveAccount())
     const handleSubmit = useCallback(async (data) => {
         setSubmitting(true)
     })
+
+    console.log(loading)
+    console.log(error)
+    console.log(data)
 
     const leftButtonProps = {
         variant: values.icon,
@@ -67,7 +73,7 @@ const AddAccount = ({ onBack }) => {
             <ScreenHeader title={sectionHeaders.addAccount} leftButtonProps={leftButtonProps} />
             <Form
                 defaultValues={defaultValues}
-                onFormSubmit={(data) => console.log(data)}
+                onFormSubmit={(data) => addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }})}
                 onFormCancel={() => null()}
                 fields={fields}
                 primaryButtonText={buttonNames.addAccount}

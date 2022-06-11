@@ -20,7 +20,7 @@ import { Host } from 'react-native-portalize'
 import NvAddAccount from './src/navigation/NvAddAccount'
 
 const apolloClient = new ApolloClient({
-  uri: 'http://192.168.2.44:4000/graphql',
+  uri: 'http://192.168.2.141:4000/graphql',
   cache,
   typeDefs
 });

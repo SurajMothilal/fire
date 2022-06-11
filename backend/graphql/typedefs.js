@@ -15,8 +15,24 @@ const typeDefs = gql`
     userId: ID!
   }
 
+  input AccountInput {
+    name: String
+    balance: String
+    currency: String
+    type: String
+    userId: ID!
+  }
+
+  type InsertResponse {
+    id: String
+  }
+
   type Query {
     accountsForUser(userId: String): [Account]
+  }
+
+  type Mutation {
+    saveAccount(accountObject: AccountInput): InsertResponse
   }
 `
 

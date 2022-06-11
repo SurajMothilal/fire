@@ -24,6 +24,11 @@ class FireAPI extends RESTDataSource {
         ? response.map(account => this.accountReducer(account))
         : []
   }
+
+  async saveAccount(accountObject) {
+    const result = await databaseHelper.saveAccount(accountObject)
+    return result
+}
 }
 
 module.exports = FireAPI
