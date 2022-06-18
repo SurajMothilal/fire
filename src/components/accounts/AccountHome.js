@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
@@ -7,11 +8,15 @@ import { accountTypes, spacing, colors, fontSize, sectionHeaders, values, icons 
 import AccountPie from './AccountPie'
 import ScreenHeader from '../common/ScreenHeader'
 
-const AccountHome = ({ client, onAddAccount }) => {
-    const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
-    const { loading, error, data } = useQuery(
+const AccountHome = ({ onAddAccount }) => {
+    // const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
+    // const { loading, error, data } = useQuery(
+    //     queries.getAccountsByUser(),
+    //     { variables: { userId: loggedInUserObj.loggedInUserId }, skip: !loggedInUserObj }
+    // )
+    const { loading, error, data, refetch } = useQuery(
         queries.getAccountsByUser(),
-        { variables: { userId: loggedInUserObj.loggedInUserId }, skip: !loggedInUserObj }
+        { variables: { userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }
     )
     const [totals, setTotals] = useState({
         total: 0,
@@ -19,47 +24,11 @@ const AccountHome = ({ client, onAddAccount }) => {
         cashPercentage: 0,
         debtPercentage: 0
     })
+    const accountsForUser = data && data.accountsForUser
     // const [selectedTimeline, setSelectedTimeline] = useState(timeline.thisWeek)
-    const DATA = [
-        {
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            name: "RBC Checking Account",
-            type: accountTypes.investment,
-            balance: 2012.12,
-            currency: 'CAD'
-        },
-        {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-            name: "TD Savings account",
-            type: accountTypes.debt,
-            balance: 12012.12,
-            currency: 'CAD'
-        },
-        {
-            id: "58694a0f-3da1-471f-bd96-145571e29d72",
-            name: "RBC",
-            type: accountTypes.cash,
-            balance: 2042.02,
-            currency: 'CAD'
-        },
-        {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f64",
-            name: "TD Savings account",
-            type: accountTypes.debt,
-            balance: 12612.12,
-            currency: 'CAD'
-        },
-        {
-            id: "58694a0f-3da1-471f-bd96-145571e29d7x",
-            name: "RBC",
-            type: accountTypes.cash,
-            balance: 2242.02,
-            currency: 'CAD'
-        },
-    ];
 
     const handleAccountAdd = useCallback(() => {
-        onAddAccount()
+        onAddAccount(refetch)
     })
     const handleAccountEdit = useCallback(() => {
         console.log('edit')
@@ -77,31 +46,32 @@ const AccountHome = ({ client, onAddAccount }) => {
         handlePress: () => handleAccountAdd()
     }
 
-
     useEffect(() => {
-        const total = DATA.reduce((acc, current) => acc + current.balance, 0)
-        const investments = DATA.filter((account) => account.type === accountTypes.investment)
-        const cash = DATA.filter((account) => account.type === accountTypes.cash)
-        const debt = DATA.filter((account) => account.type === accountTypes.debt)
-        let investmentTotal = 0
-        let cashTotal = 0
-        let debtTotal = 0
-        if (investments) {
-            investmentTotal = investments.reduce((acc, current) => acc + current.balance, 0)
+        if (accountsForUser) {
+            const total = accountsForUser.reduce((acc, current) => acc + current.balance, 0)
+            const investments = accountsForUser.filter((account) => account.type === accountTypes.investment)
+            const cash = accountsForUser.filter((account) => account.type === accountTypes.cash)
+            const debt = accountsForUser.filter((account) => account.type === accountTypes.debt)
+            let investmentTotal = 0
+            let cashTotal = 0
+            let debtTotal = 0
+            if (investments.length) {
+                investmentTotal = investments.reduce((acc, current) => acc + current.balance, 0)
+            }
+            if (cash.length) {
+                cashTotal = cash.reduce((acc, current) => acc + current.balance, 0)
+            }
+            if (debt.length) {
+                debtTotal = debt.reduce((acc, current) => acc + current.balance, 0)
+            }
+            setTotals({
+                total,
+                investmentPercentage: Math.round((investmentTotal * 100) / total),
+                cashPercentage: Math.round((cashTotal * 100) / total),
+                debtPercentage: Math.round((debtTotal * 100) / total)
+            })
         }
-        if (cash) {
-            cashTotal = cash.reduce((acc, current) => acc + current.balance, 0)
-        }
-        if (debt) {
-            debtTotal = debt.reduce((acc, current) => acc + current.balance, 0)
-        }
-        setTotals({
-            total,
-            investmentPercentage: Math.round((investmentTotal * 100) / total),
-            cashPercentage: Math.round((cashTotal * 100) / total),
-            debtPercentage: Math.round((debtTotal * 100) / total)
-        })
-    }, [])
+    }, [accountsForUser, data])
     return (
         <SafeAreaView>
             <ScreenHeader title={sectionHeaders.accounts} leftButtonProps={leftButtonProps} rightButtonProps={rightButtonProps} />
@@ -132,7 +102,7 @@ const AccountHome = ({ client, onAddAccount }) => {
                 />
             </ScrollView> */}
             <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} />
-            <AccountList data={DATA}/>
+            <AccountList data={accountsForUser}/>
         </SafeAreaView>
     )
 }

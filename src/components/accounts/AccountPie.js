@@ -6,19 +6,24 @@ import SectionTitle from "../common/SectionTitle"
 import { colors, fontSize, fontWeight, sectionHeaders, spacing } from "../../constants"
 import { calculateSavingsRatePercentage } from "../../services/financeHelper"
 
-const AccountPie = ({ investment, cash, debt }) => {
+const AccountPie = ({ investment = 0, cash = 0, debt = 0 }) => {
+    let padAngle = 4
+    const totalArray = [investment, cash, debt].filter((item) => item === 0)
+    if (totalArray.length > 1) {
+        padAngle = 0
+    }
     return (
         <View style={styles.container}>
             <View style={styles.meta}>
                 <View style={styles.centerText}>
-                    <Text style={styles.cash} title={calculateSavingsRatePercentage(cash, investment, debt)} />
+                    <Text style={styles.cash} title={calculateSavingsRatePercentage(cash, investment)} />
                     <SectionTitle title={sectionHeaders.savingsRate.toUpperCase()} style={styles.savingsRate} />
                 </View>
             </View>
             <VictoryPie
                 innerRadius={95}
                 cornerRadius={5}
-                padAngle={4}
+                padAngle={padAngle}
                 labels={() => null}
                 colorScale={[ colors.green, colors.purple, colors.red ]}
                 height={310}

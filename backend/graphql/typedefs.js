@@ -9,7 +9,7 @@ const typeDefs = gql`
   type Account {
     name: String
     id: ID!
-    balance: String
+    balance: Float
     currency: String
     type: String
     userId: ID!

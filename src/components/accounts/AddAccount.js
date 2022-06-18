@@ -1,22 +1,18 @@
 import React, { useState, useCallback } from 'react'
 import { SafeAreaView, View } from 'react-native'
+import { useMutation } from '@apollo/client';
 import { useMutationHook, mutations } from '../../services/graphqlQueryBuilder'
 import * as Yup from 'yup';
 import ScreenHeader from '../common/ScreenHeader'
 import Form from '../common/Form'
-import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountTypes, currencyCodes } from '../../constants'
+import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountTypes, currencyCodes, textInputTypes } from '../../constants'
 
 const AddAccount = ({ onBack }) => {
     const [formError, setFormError] = useState(null)
-    const [submitting, setSubmitting] = useState(false)
-    const [addAccount, { data, loading, error }] = useMutationHook(mutations.saveAccount())
+    const [addAccount, { loading }] = useMutationHook(mutations.saveAccount(), onBack, (error) => setFormError(error.message))
     const handleSubmit = useCallback(async (data) => {
-        setSubmitting(true)
+        await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }})
     })
-
-    console.log(loading)
-    console.log(error)
-    console.log(data)
 
     const leftButtonProps = {
         variant: values.icon,
@@ -38,6 +34,7 @@ const AddAccount = ({ onBack }) => {
         {
             name: 'balance',
             placeholder: 'Current Balance',
+            inputType: textInputTypes.number
         },
         {
             name: 'currency',
@@ -73,13 +70,13 @@ const AddAccount = ({ onBack }) => {
             <ScreenHeader title={sectionHeaders.addAccount} leftButtonProps={leftButtonProps} />
             <Form
                 defaultValues={defaultValues}
-                onFormSubmit={(data) => addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }})}
-                onFormCancel={() => null()}
+                onFormSubmit={(data) => handleSubmit(data)}
+                onFormCancel={() => onBack()}
                 fields={fields}
                 primaryButtonText={buttonNames.addAccount}
                 cancelButtonText={buttonNames.cancel}
-                disabled={submitting}
-                loading={submitting}
+                disabled={loading}
+                loading={loading}
                 formError={formError}
                 validationSchema={validationSchema}
             />

@@ -14,7 +14,6 @@ const Tab = createBottomTabNavigator();
 const Home = ({ signOutSuccess }) =>  {
     const [signingOut, setSigningOut] = useState(false)
     const { data } = useQuery(localQueries.loggedInUserId())
-    console.log(data)
     const handleSignOutSuccess = useCallback(() => {
         setSigningOut(false)
         signOutSuccess()

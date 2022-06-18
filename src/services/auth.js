@@ -29,7 +29,6 @@ async function resendConfirmation(email, successCallback = () => {}, errorCallba
         const user = await Auth.resendSignUp(email);
         successCallback(user);
     } catch (error) {
-        console.log(error)
         errorCallback(error);
     }
 }

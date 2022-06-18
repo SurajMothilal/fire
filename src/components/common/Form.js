@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { capitalizeFirstLetter } from '../../services/stringHelper'
 import Button from "./Button";
 import Text from '../common/Text';
-import { spacing, colors, values, fontSize, formFieldTypes, icons } from "../../constants";
+import { spacing, colors, values, fontSize, formFieldTypes, icons, textInputTypes } from "../../constants";
 
 const Form = ({
     defaultValues,
@@ -20,8 +20,9 @@ const Form = ({
     formError,
     validationSchema = null,
     additionalComponents = [],
-    onFocus = () => {}
+    onFocus = () => {},
 }) => {
+    const [showFormError, setShowFormError] = useState(true)
     const dropDownFields = fields.map((f) => f.type === formFieldTypes.dropdown ? { name: f.name, list: f.list } : undefined).filter(x => x)
     const secretFields = fields.map((f) => f.secure ? f.name : undefined).filter(x => x)
     const [hideSecret, setHideSecret] = useState({
@@ -36,7 +37,7 @@ const Form = ({
     })
     const [dropdownTop, setDropdownTop] = useState(0)
     const [visible, setVisible] = useState({ show: false, options: [], name: null })
-    const { register, control, handleSubmit, formState: { errors, isDirty, isSubmitting, isSubmitSuccessful }, clearErrors, setValue } = useForm({
+    const { register, control, handleSubmit, formState: { errors, isDirty, isSubmitting }, clearErrors, setValue } = useForm({
         defaultValues,
         ...(validationSchema ? { resolver: yupResolver(validationSchema)} : {})
     });
@@ -62,7 +63,14 @@ const Form = ({
   })
 
     const onSubmit = data => {
-        onFormSubmit(data);
+        setShowFormError(true)
+        const formattedData = data
+        fields.map((field) => {
+            if(field.inputType && field.inputType === textInputTypes.number) {
+                formattedData[field.name] = parseFloat(formattedData[field.name]).toFixed(2)
+            }
+        })
+        onFormSubmit(formattedData);
         clearErrors()
     }
   
@@ -96,6 +104,9 @@ const Form = ({
     })
 
     const renderInput = (fieldEntry, fieldType, onChange, onBlur, value, onFocus) => {
+    const hideFormErrors = () => {
+        if(showFormError) setShowFormError(false)
+    }
     const fieldName = fieldEntry.name
     if (fieldType === formFieldTypes.dropdown) {
         const fieldObj = dropdownSelections[fieldName]
@@ -130,7 +141,10 @@ const Form = ({
                                 data={visible.options}
                                 renderItem={({item, index}) => (
                                     <View style={styles.dropdownItem}>
-                                        <TouchableOpacity onPress={() => selectFromDropdown(item, visible.name)}>
+                                        <TouchableOpacity onPress={() => {
+                                            hideFormErrors()
+                                            selectFromDropdown(item, visible.name)
+                                        }}>
                                             <Text title={capitalizeFirstLetter(item)} />
                                         </TouchableOpacity>
                                     </View>
@@ -148,13 +162,14 @@ const Form = ({
             <TextInput
                 style={styles.input}
                 onBlur={onBlur}
-                onChangeText={onChange}
                 value={value}
-                onFocus={onFocus}
+                onChangeText={onChange}
+                onFocus={hideFormErrors}
                 autoCapitalize="none"
                 secureTextEntry={hideSecret[fieldName]}
                 underlineColorAndroid="transparent"
                 {...register(fieldName)}
+
             />
             {fieldEntry.secure && (
                 <TouchableOpacity onPress={() => toggleSecret(fieldName)} style={styles.iconContainer}>
@@ -177,7 +192,7 @@ const Form = ({
                         <Text title={fieldEntry.placeholder} />
                         <Controller
                             control={control}
-                            render={({ field: { onChange, onBlur, value } }) => renderInput(fieldEntry, fieldType, onChange, onBlur, fieldValue)}
+                            render={({ field: { value, onChange, onBlur } }) => renderInput(fieldEntry, fieldType, onChange, onBlur, fieldValue)}
                             name={fieldName}
                         />
                         {errors[fieldName] ? <Text style={styles.errorText} title={errors[fieldName].message} /> : <Text style={styles.errorText} title="" />}
@@ -186,7 +201,7 @@ const Form = ({
             })}
         </View>
         {auxillaryComponent}
-        {formError && <Text title={formError} style={styles.error} />}
+        {(formError && showFormError) && <Text title={formError} style={styles.error} />}
         <>
             <Button title={primaryButtonText} handlePress={handleSubmit(onSubmit)} loading={isSubmitting} disabled={isSubmitting} />
             {propInjectedAdditionalComponents}

@@ -15,16 +15,26 @@ import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessfu
 import NvAccountHome from './src/navigation/NvAccountHome'
 import { typeDefs } from './src/graphql/typedef'
 import { cache } from './src/graphql/cache'
-import { ApolloClient, ApolloProvider } from '@apollo/client'
-import { Host } from 'react-native-portalize'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import NvAddAccount from './src/navigation/NvAddAccount'
+
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore'
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all'
+  }
+}
 
 const apolloClient = new ApolloClient({
   uri: 'http://192.168.2.141:4000/graphql',
   cache,
-  typeDefs
+  typeDefs,
+  defaultOptions
 });
-
 
 Amplify.configure(awsconfig)
 

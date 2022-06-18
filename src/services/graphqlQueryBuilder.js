@@ -6,6 +6,9 @@ const queries = {
       accountsForUser(userId: $userId) {
         id
         name
+        balance
+        currency
+        type
       }
     }
     `,
@@ -14,7 +17,7 @@ const queries = {
 const mutations = {
   saveAccount: () => gql`
     mutation SaveAccount($accountObject: AccountInput!) {
-      saveAccount(accountObject: $accountObject) {
+      saveAccountz(accountObject: $accountObject) {
         id
       }
     }
@@ -31,8 +34,8 @@ const localQueries = {
 }
 
 
-const useMutationHook = (query) => {
-  const [mutateFunction, { data, loading, error }] = useMutation(query)
+const useMutationHook = (query, successCallback, errorCallback) => {
+  const [mutateFunction, { data, loading, error }] = useMutation(query, { onCompleted: successCallback, onError: errorCallback })
   return [mutateFunction, { data, loading, error }]
 }
 

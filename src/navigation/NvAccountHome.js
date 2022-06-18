@@ -4,7 +4,7 @@ import { screenNames } from '../constants';
 
 const NvAccountHome = ({ navigation, route }) => {
     const locale = route?.params?.locale
-    const handleAddAccount = useCallback(() => navigation.navigate(screenNames.addAccount))
+    const handleAddAccount = useCallback((refetch) => navigation.navigate(screenNames.addAccount, { refetchAccounts: refetch }))
     return (
         <AccountHome locale={locale} onAddAccount={handleAddAccount} />
     )

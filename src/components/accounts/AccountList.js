@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { SectionList, TouchableHighlight, View, StyleSheet } from 'react-native'
 import Text from '../../components/common/Text'
 import SectionTitle from '../common/SectionTitle';
-import { accountTypes, colors, spacing, sectionHeaders } from '../../constants';
+import { accountTypes, colors, spacing, sectionHeaders, fontSize } from '../../constants';
 
 const renderItem = ({ item }) => {
     let backgroundColor
@@ -19,48 +19,47 @@ const renderItem = ({ item }) => {
             <View style={styles.itemContainer}>
                 <View title={item.type} style={{ ...styles.dot, ...{ backgroundColor } }} />
                 <View style={styles.textFields}>
-                    <Text title={item.name} />
-                    <Text title={item.balance} />
+                    <Text title={item.name} style={styles.textStyle} />
+                    <Text title={parseFloat(item.balance).toFixed(2)} style={styles.textStyle} />
                 </View>
             </View>
         </TouchableHighlight>
     )
   };
 
-const AccountList = ({data}) => {
+const AccountList = ({data = []}) => {
     const investments = data.filter((dataPoint) =>  dataPoint.type === accountTypes.investment)
     const cash = data.filter((dataPoint) =>  dataPoint.type === accountTypes.cash)
     const debt = data.filter((dataPoint) =>  dataPoint.type === accountTypes.debt)
     const updatedData = []
-    if (investments) {
+    if (investments.length) {
         updatedData.push({
             title: accountTypes.investment,
             data: investments
         })
     }
-    if (cash) {
+    if (cash.length) {
         updatedData.push({
             title: accountTypes.cash,
             data: cash
         })
     }
-    if (debt) {
+    if (debt.length) {
         updatedData.push({
             title: accountTypes.debt,
             data: debt
         })
     }
     return (
-        <>
-           <SectionList
-                sections={updatedData}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                renderSectionHeader={({ section: { title } }) => (
-                    <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
-                )}
-            />
-        </>
+        <SectionList
+            sections={updatedData}
+            renderItem={renderItem}
+            stickySectionHeadersEnabled={false}
+            keyExtractor={(item) => item.id}
+            renderSectionHeader={({ section: { title } }) => (
+                <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
+            )}
+        />
     )
 }
 
@@ -85,6 +84,9 @@ const styles = StyleSheet.create({
     },
     listSections: {
         textAlign: 'left'
+    },
+    textStyle: {
+        fontSize: fontSize.medium
     }
 })
 

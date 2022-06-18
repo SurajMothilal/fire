@@ -113,6 +113,10 @@ const formFieldTypes = {
     dropdown: 'dropdown'
 }
 
+const textInputTypes = {
+    number: 'number'
+}
+
 export {
     spacing,
     colors,
@@ -128,5 +132,6 @@ export {
     timeline,
     buttonNames,
     formFieldTypes,
-    currencyCodes
+    currencyCodes,
+    textInputTypes
 }

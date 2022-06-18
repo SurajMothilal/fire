@@ -1,5 +1,5 @@
-const calculateSavingsRatePercentage = (cash, investment, debt) => {
-    return `${(100 * (cash + investment)) / debt}%`
+const calculateSavingsRatePercentage = (cash, investment) => {
+    return `${(cash + investment)}%`
 }
 
 export {

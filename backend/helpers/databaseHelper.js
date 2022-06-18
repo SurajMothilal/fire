@@ -1,8 +1,7 @@
 const db  = require('../data/db')
 
 const getAccountsByUser = async (userId) => {
-    const accounts = await db('accounts').where('user_id', userId)
-    console.log(accounts)
+    const accounts = await db('accounts').where('userId', userId)
     return accounts
 }
 
