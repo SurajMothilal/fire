@@ -22,6 +22,7 @@ const colors = {
     white: '#FFFFFF',
     red: '#F54040',
     lightred: '#ffbfba',
+    orange: '#FF9F1C',
     purple: '#9262F9'
 }
 
@@ -64,7 +65,9 @@ const sectionHeaders = {
     cash: 'Cash',
     accounts: 'Accounts',
     savingsRate: 'Savings Rate',
-    addAccount: 'Add Account'
+    addAccount: 'Add Account',
+    netWorth: 'Net Worth',
+    myAccounts: 'My Accounts'
 }
 
 const fontWeight = {

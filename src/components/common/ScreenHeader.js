@@ -10,7 +10,7 @@ const ScreenHeader = ({ title, leftButtonProps, rightButtonProps }) => {
         <>
             <View style={styles.headerContainer}>
                 {leftButtonProps ? <Button {...leftButtonProps} /> : <View/> }
-                <CommonScreenTitle title={title} style={styles.listSections} />
+                <CommonScreenTitle title={title} />
                 {rightButtonProps ? <Button {...rightButtonProps} /> : <View/> }
             </View>
             <LineDivider />

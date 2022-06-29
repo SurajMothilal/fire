@@ -10,6 +10,7 @@ import AccountPie from './AccountPie'
 import ScreenHeader from '../common/ScreenHeader'
 import AccountDot from '../common/AccountDot'
 import LineDivider from '../common/LineDivider'
+import Pill from '../common/Pill'
 import FormattedCurrency from '../common/FormattedCurrency'
 
 const AccountHome = ({ onAddAccount }) => {
@@ -114,25 +115,25 @@ const AccountHome = ({ onAddAccount }) => {
             {/* <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} /> */}
             <View style={styles.netWorthContainer}>
                 <View style={styles.totalTextContainer}>
-                    <Text style={styles.netWorthHeader} title={'Net Worth'.toUpperCase()} />
+                    <Pill text={sectionHeaders.netWorth.toUpperCase()} color={colors.orange} />
                     <FormattedCurrency style={styles.netWorthText} value={totals.total} />
                 </View>
             </View>
             <View style={styles.totalContainer}>
                 <View style={styles.totalTextContainer}>
-                    <Text style={styles.totalTextHeader} title={sectionHeaders[accountTypes.cash].toUpperCase()} />
+                    <Pill text={sectionHeaders[accountTypes.cash].toUpperCase()} color={colors.green} />
                     <FormattedCurrency style={styles.totalText} value={totals.cashTotal} />
                 </View>
                 <View style={styles.totalTextContainer}>
-                    <Text style={styles.totalTextHeader} title={sectionHeaders[accountTypes.investment].toUpperCase()} />
+                    <Pill text={sectionHeaders[accountTypes.investment].toUpperCase()} color={colors.purple} />
                     <FormattedCurrency style={styles.totalText} value={totals.investmentTotal} />
                 </View>
                 <View style={styles.totalTextContainer}>
-                    <Text style={styles.totalTextHeader} title={sectionHeaders[accountTypes.debt].toUpperCase()} />
+                    <Pill text={sectionHeaders[accountTypes.debt].toUpperCase()} color={colors.red} />
                     <FormattedCurrency style={styles.totalText} value={totals.debtTotal} />
                 </View>
             </View>
-            <AccountList data={accountsForUser}/>
+            <AccountList data={accountsForUser} handleAccountAdd={handleAccountAdd}/>
         </SafeAreaView>
     )
 }
@@ -141,14 +142,14 @@ const styles = StyleSheet.create({
     netWorthContainer: {
         justifyContent: 'center',
         paddingHorizontal: spacing.xlarge,
-        paddingVertical: spacing.large,
+        paddingVertical: spacing.xlarge,
         backgroundColor: colors.black,
     },
     totalContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: spacing.xlarge,
-        paddingBottom: spacing.large,
+        paddingBottom: spacing.xlarge,
         backgroundColor: colors.black,
     },
     netWorthHeader:{
@@ -174,13 +175,14 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: fontSize.medium,
         textAlign: 'center',
-        marginTop: spacing.xxlight,
+        marginTop: spacing.xlight,
         fontWeight: fontWeight.bold,
     },
     netWorthText: {
         color: colors.white,
         fontSize: fontSize.xxlarge,
         textAlign: 'center',
+        marginTop: spacing.xlight,
         fontWeight: fontWeight.bold,
     },
     textTitle: {
