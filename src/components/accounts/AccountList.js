@@ -1,26 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { SectionList, TouchableHighlight, View, StyleSheet } from 'react-native'
 import Text from '../../components/common/Text'
 import SectionTitle from '../common/SectionTitle';
-import { accountTypes, colors, spacing, sectionHeaders, fontSize } from '../../constants';
+import { accountTypes, spacing, sectionHeaders, fontSize } from '../../constants';
+import AccountDot from '../common/AccountDot';
+import FormattedCurrency from '../common/FormattedCurrency';
 
 const renderItem = ({ item }) => {
-    let backgroundColor
-    if (item.type === accountTypes.cash) {
-        backgroundColor = colors.green
-    } else if (item.type === accountTypes.debt) {
-        backgroundColor = colors.red
-    } else if (item.type === accountTypes.investment) {
-        backgroundColor = colors.purple
-    }
-
     return (
         <TouchableHighlight onPress={() => console.log('her')}>
             <View style={styles.itemContainer}>
-                <View title={item.type} style={{ ...styles.dot, ...{ backgroundColor } }} />
+                <AccountDot type={item.type} />
                 <View style={styles.textFields}>
                     <Text title={item.name} style={styles.textStyle} />
-                    <Text title={parseFloat(item.balance).toFixed(2)} style={styles.textStyle} />
+                    <FormattedCurrency style={styles.textStyle} value={parseFloat(item.balance).toFixed(2)} />
                 </View>
             </View>
         </TouchableHighlight>
@@ -50,6 +43,7 @@ const AccountList = ({data = []}) => {
             data: debt
         })
     }
+
     return (
         <SectionList
             sections={updatedData}
@@ -70,13 +64,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: spacing.light,
         paddingVertical: spacing.xlight,
     },
-    dot: {
-        alignSelf: 'center',
-        height: 10,
-        width: 10,
-        borderRadius: 20,
-        marginRight: spacing.light
-    },
     textFields: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -87,6 +74,12 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: fontSize.medium
+    },
+    totalContainer: {
+        marginHorizontal: spacing.medium,
+        marginBottom: spacing.light,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
 

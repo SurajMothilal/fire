@@ -14,20 +14,20 @@ const AccountPie = ({ investment = 0, cash = 0, debt = 0 }) => {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.meta}>
+            {/* <View style={styles.meta}>
                 <View style={styles.centerText}>
                     <Text style={styles.cash} title={calculateSavingsRatePercentage(cash, investment)} />
                     <SectionTitle title={sectionHeaders.savingsRate.toUpperCase()} style={styles.savingsRate} />
                 </View>
-            </View>
+            </View> */}
             <VictoryPie
-                innerRadius={95}
+                innerRadius={60}
                 cornerRadius={5}
                 padAngle={padAngle}
                 labels={() => null}
                 colorScale={[ colors.green, colors.purple, colors.red ]}
-                height={310}
-                width={310}
+                height={250}
+                width={250}
                 data={[
                     { x: `${cash}%`, y: cash },
                     { x: `${investment}%`, y: investment },
@@ -42,7 +42,8 @@ const AccountPie = ({ investment = 0, cash = 0, debt = 0 }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
+        flexDirection: 'row'
     },
     centerText: {
         marginTop: spacing.medium,

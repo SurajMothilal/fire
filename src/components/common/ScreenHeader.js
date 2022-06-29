@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         alignItems: 'baseline',
         justifyContent: 'space-between',
         marginHorizontal: spacing.xlight,
+        paddingBottom: spacing.light
     }
 })
 

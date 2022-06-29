@@ -17,7 +17,7 @@ const queries = {
 const mutations = {
   saveAccount: () => gql`
     mutation SaveAccount($accountObject: AccountInput!) {
-      saveAccountz(accountObject: $accountObject) {
+      saveAccount(accountObject: $accountObject) {
         id
       }
     }
