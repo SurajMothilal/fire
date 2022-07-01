@@ -23,7 +23,16 @@ const typeDefs = gql`
     userId: ID!
   }
 
-  type InsertResponse {
+  input AccountEditInput {
+    name: String
+    balance: String
+    currency: String
+    type: String
+    id: ID!
+    userId: ID!
+  }
+
+  type AccountResponse {
     id: String
   }
 
@@ -32,7 +41,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    saveAccount(accountObject: AccountInput): InsertResponse
+    saveAccount(accountObject: AccountInput): AccountResponse,
+    editAccount(accountEditObject: AccountEditInput): AccountResponse
   }
 `
 

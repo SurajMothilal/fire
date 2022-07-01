@@ -56,6 +56,7 @@ const fontSize = {
 
 const buttonNames = {
     addAccount: 'Add Account',
+    updateAccount: 'Update Account',
     cancel: 'Cancel'
 }
 

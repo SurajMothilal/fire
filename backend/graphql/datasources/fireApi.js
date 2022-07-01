@@ -14,7 +14,7 @@ class FireAPI extends RESTDataSource {
         balance: account.balance || '',
         currency: account.currency || null,
         type: account.type || '',
-        userId: account['user_id'] || null
+        userId: account.userId || null
       }
   }
 
@@ -28,7 +28,12 @@ class FireAPI extends RESTDataSource {
   async saveAccount(accountObject) {
     const result = await databaseHelper.saveAccount(accountObject)
     return result
-}
+  }
+
+  async editAccount(accountEditObject) {
+    const result = await databaseHelper.editAccount(accountEditObject)
+    return result
+  }
 }
 
 module.exports = FireAPI

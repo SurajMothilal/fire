@@ -9,6 +9,7 @@ const queries = {
         balance
         currency
         type
+        userId
       }
     }
     `,
@@ -18,6 +19,13 @@ const mutations = {
   saveAccount: () => gql`
     mutation SaveAccount($accountObject: AccountInput!) {
       saveAccount(accountObject: $accountObject) {
+        id
+      }
+    }
+  `,
+  editAccount: () => gql`
+    mutation EditAccount($accountEditObject: AccountEditInput!) {
+      editAccount(accountEditObject: $accountEditObject) {
         id
       }
     }

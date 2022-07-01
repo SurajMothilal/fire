@@ -38,6 +38,11 @@ const AccountHome = ({ onAddAccount }) => {
     const handleAccountAdd = useCallback(() => {
         onAddAccount(refetch)
     })
+
+    const handleAccountPress = useCallback((item) => {
+        onAddAccount(refetch, item)
+    })
+    
     const handleAccountEdit = useCallback(() => {
         console.log('edit')
     })
@@ -86,32 +91,6 @@ const AccountHome = ({ onAddAccount }) => {
     return (
         <SafeAreaView>
             <ScreenHeader title={sectionHeaders.accounts} leftButtonProps={leftButtonProps} rightButtonProps={rightButtonProps} />
-            {/* <ScrollView style={styles.timeline} showsHorizontalScrollIndicator={false} horizontal>
-                <Button
-                    variant={values.primaryGrey}
-                    title={timeline.year}
-                    handlePress={() => handleForgotPasswordPress()}
-                    textStyle={styles.timelineButtonText}
-                />
-                <Button
-                    variant={values.primaryGrey}
-                    title={timeline.semiYear}
-                    handlePress={() => handleForgotPasswordPress()}
-                    textStyle={styles.timelineButtonText}
-                />
-                <Button
-                    variant={values.primaryGrey}
-                    title={timeline.lastMonth}
-                    handlePress={() => handleForgotPasswordPress()}
-                    textStyle={styles.timelineButtonText}
-                />
-                <Button
-                    variant={values.primaryGrey}
-                    title={timeline.thisWeek}
-                    handlePress={() => handleForgotPasswordPress()}
-                    textStyle={styles.timelineButtonText}
-                />
-            </ScrollView> */}
             {/* <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} /> */}
             <View style={styles.netWorthContainer}>
                 <View style={styles.totalTextContainer}>
@@ -133,7 +112,7 @@ const AccountHome = ({ onAddAccount }) => {
                     <FormattedCurrency style={styles.totalText} value={totals.debtTotal} />
                 </View>
             </View>
-            <AccountList data={accountsForUser} handleAccountAdd={handleAccountAdd}/>
+            <AccountList data={accountsForUser} handleAccountAdd={handleAccountAdd} onAccountPress={handleAccountPress} />
         </SafeAreaView>
     )
 }

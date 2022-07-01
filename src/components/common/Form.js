@@ -103,14 +103,15 @@ const Form = ({
         resetDropdown()
     })
 
-    const renderInput = (fieldEntry, fieldType, onChange, onBlur, value, onFocus) => {
+    const renderInput = (fieldEntry, fieldType, onChange, onBlur, value) => {
     const hideFormErrors = () => {
         if(showFormError) setShowFormError(false)
     }
     const fieldName = fieldEntry.name
     if (fieldType === formFieldTypes.dropdown) {
         const fieldObj = dropdownSelections[fieldName]
-        const placeholder = fieldObj.selected ? null : `Select a ${fieldName}`
+        const selectedOption = fieldObj.selected || value
+        const placeholder = selectedOption ? null : `Select a ${fieldName}`
         return (
             <View style={styles.dropdownContainer}>
                 <TouchableOpacity ref={fieldObj.ref} onPress={() => toggleDropdown(fieldObj)} style={styles.inputContainer}>
@@ -118,12 +119,12 @@ const Form = ({
                         <TextInput
                             style={styles.input}
                             editable={false}
-                            value={fieldObj.selected ? capitalizeFirstLetter(fieldObj.selected) : ''}
+                            value={selectedOption ? capitalizeFirstLetter(selectedOption) : ''}
                             selectTextOnFocus={false}
                             underlineColorAndroid="transparent"
                             {...register(fieldName)}
                         >
-                            <Text title={fieldObj.selected ? null : placeholder} style={fieldObj.selected ? styles.dropdownValue : styles.placeholder} />
+                            <Text title={selectedOption ? null : placeholder} style={fieldObj.selected ? styles.dropdownValue : styles.placeholder} />
                         </TextInput>
                     </View>
                     <View style={styles.iconContainer}>
@@ -157,12 +158,13 @@ const Form = ({
             </View>
         )
     }
+
     return (
         <View style={styles.inputContainer}>
             <TextInput
                 style={styles.input}
                 onBlur={onBlur}
-                value={value}
+                value={value.toString()}
                 onChangeText={onChange}
                 onFocus={hideFormErrors}
                 autoCapitalize="none"
@@ -186,13 +188,12 @@ const Form = ({
             {fields.map((fieldEntry) => {
                 const fieldName = fieldEntry.name
                 const fieldType = fieldEntry.type
-                const fieldValue = fieldEntry.value
                 return (
                     <View key={fieldName}>
                         <Text title={fieldEntry.placeholder} />
                         <Controller
                             control={control}
-                            render={({ field: { value, onChange, onBlur } }) => renderInput(fieldEntry, fieldType, onChange, onBlur, fieldValue)}
+                            render={({ field: { value, onChange, onBlur } }) => renderInput(fieldEntry, fieldType, onChange, onBlur, value)}
                             name={fieldName}
                         />
                         {errors[fieldName] ? <Text style={styles.errorText} title={errors[fieldName].message} /> : <Text style={styles.errorText} title="" />}

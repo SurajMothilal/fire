@@ -5,7 +5,8 @@ const resolvers = {
         accountsForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getAccountsByUser(userId),
     },
     Mutation: {
-        saveAccount: (_, { accountObject }, { dataSources }) => dataSources.fireAPI.saveAccount(accountObject)
+        saveAccount: (_, { accountObject }, { dataSources }) => dataSources.fireAPI.saveAccount(accountObject),
+        editAccount: (_, { accountEditObject }, { dataSources }) => dataSources.fireAPI.editAccount(accountEditObject)
     }
 }
 

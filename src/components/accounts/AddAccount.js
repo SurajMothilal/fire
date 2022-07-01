@@ -7,11 +7,23 @@ import ScreenHeader from '../common/ScreenHeader'
 import Form from '../common/Form'
 import { sectionHeaders, values, icons, buttonNames, formFieldTypes, accountTypes, currencyCodes, textInputTypes } from '../../constants'
 
-const AddAccount = ({ onBack }) => {
+const AddAccount = ({ onBack, item }) => {
     const [formError, setFormError] = useState(null)
-    const [addAccount, { loading }] = useMutationHook(mutations.saveAccount(), onBack, (error) => setFormError(error.message))
+    const [addAccount, { loading: addLoading }] = useMutationHook(mutations.saveAccount(), onBack, (error) => setFormError(error.message))
+    const [editAccount, { loading: editLoading }] = useMutationHook(mutations.editAccount(), onBack, (error) => setFormError(error.message))
     const handleSubmit = useCallback(async (data) => {
-        await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }})
+        if (item) {
+            await editAccount({ variables: { accountEditObject: {
+                id: item.id,
+                name: data.name,
+                type: data.type,
+                balance: data.balance,
+                currency: item.currency,
+                userId: item.userId
+            } }})
+        } else {
+            await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9', currency: 'CAD' } }})
+        }
     })
 
     const leftButtonProps = {
@@ -23,7 +35,7 @@ const AddAccount = ({ onBack }) => {
     const fields = [
         {
             name: 'name',
-            placeholder: 'Account Name'
+            placeholder: 'Account Name',
         },
         {
             name: 'type',
@@ -34,14 +46,14 @@ const AddAccount = ({ onBack }) => {
         {
             name: 'balance',
             placeholder: 'Current Balance',
-            inputType: textInputTypes.number
+            inputType: textInputTypes.number,
         },
-        {
-            name: 'currency',
-            type: formFieldTypes.dropdown,
-            list: [currencyCodes.CAD, currencyCodes.USD],
-            placeholder: 'Currency'
-        },
+        // {
+        //     name: 'currency',
+        //     type: formFieldTypes.dropdown,
+        //     list: [currencyCodes.CAD, currencyCodes.USD],
+        //     placeholder: 'Currency'
+        // },
     ]
 
     const validationSchema = Yup.object().shape({
@@ -53,16 +65,13 @@ const AddAccount = ({ onBack }) => {
             .required('Type is required'),
         balance: Yup.string()
             .required('Current Balance is required')
-            .matches(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/, 'Enter a valid balance'),
-        currency: Yup.string()
-            .required('Currency is required')            
+            .matches(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/, 'Enter a valid balance'),       
     });
 
     const defaultValues = {
-        name: '',
-        type: '',
-        balance: '',
-        currency: ''
+        name: item ? item.name : '',
+        type: item ? item.type : '',
+        balance: item ? item.balance : '',
     }
 
     return (
@@ -73,10 +82,10 @@ const AddAccount = ({ onBack }) => {
                 onFormSubmit={(data) => handleSubmit(data)}
                 onFormCancel={() => onBack()}
                 fields={fields}
-                primaryButtonText={buttonNames.addAccount}
+                primaryButtonText={item ? buttonNames.updateAccount : buttonNames.addAccount}
                 cancelButtonText={buttonNames.cancel}
-                disabled={loading}
-                loading={loading}
+                disabled={addLoading || editLoading}
+                loading={addLoading || editLoading}
                 formError={formError}
                 validationSchema={validationSchema}
             />

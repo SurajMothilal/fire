@@ -1,5 +1,5 @@
 import React from 'react'
-import { SectionList, TouchableHighlight, View, StyleSheet } from 'react-native'
+import { SectionList, TouchableHighlight, View, StyleSheet, SafeAreaView } from 'react-native'
 import Text from '../../components/common/Text'
 import SectionTitle from '../common/SectionTitle';
 import { accountTypes, spacing, sectionHeaders, fontSize, values, icons } from '../../constants';
@@ -8,9 +8,9 @@ import CommonScreenTitle from '../common/CommonScreenTitle';
 import Button from '../common/Button';
 import FormattedCurrency from '../common/FormattedCurrency';
 
-const renderItem = ({ item }) => {
+const renderItem = (item, onAccountPress) => {
     return (
-        <TouchableHighlight onPress={() => console.log('her')}>
+        <TouchableHighlight onPress={() => onAccountPress(item)}>
             <View style={styles.itemContainer}>
                 <AccountDot type={item.type} />
                 <View style={styles.textFields}>
@@ -22,7 +22,8 @@ const renderItem = ({ item }) => {
     )
   };
 
-const AccountList = ({data = [], handleAccountAdd}) => {
+const AccountList = ({data = [], handleAccountAdd, onAccountPress }) => {
+    console.log(data)
     const investments = data.filter((dataPoint) =>  dataPoint.type === accountTypes.investment)
     const cash = data.filter((dataPoint) =>  dataPoint.type === accountTypes.cash)
     const debt = data.filter((dataPoint) =>  dataPoint.type === accountTypes.debt)
@@ -52,22 +53,26 @@ const AccountList = ({data = [], handleAccountAdd}) => {
                 <CommonScreenTitle title={sectionHeaders.myAccounts} />
                 <Button variant={values.icon} iconName={icons.add} handlePress={handleAccountAdd} />
             </View>
-            <SectionList
-                sections={updatedData}
-                renderItem={renderItem}
-                stickySectionHeadersEnabled={false}
-                keyExtractor={(item) => item.id}
-                renderSectionHeader={({ section: { title } }) => (
-                    <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
-                )}
-            />
+            <View style={styles.listContainer}>
+                <SectionList
+                    sections={updatedData}
+                    renderItem={({ item }) => renderItem(item, onAccountPress)}
+                    stickySectionHeadersEnabled={false}
+                    keyExtractor={(item) => item.id}
+                    renderSectionHeader={({ section: { title } }) => (
+                        <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
+                    )}
+                />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: spacing.light
+        marginTop: spacing.light,
+    },
+    listContainer: {
     },
     listHeader: {
         flexDirection: 'row',
