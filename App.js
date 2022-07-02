@@ -1,5 +1,6 @@
 // require('dotenv').config()
 import React from 'react'
+import { View } from 'react-native'
 import { Amplify } from 'aws-amplify'
 import awsconfig from './src/aws-exports'
 import NvLogin from './src/navigation/NvLogin'
@@ -52,7 +53,7 @@ const App = () => {
     locale: 'en-CA'
   }
   return (
-      <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient}>
         <NavigationContainer theme={MyTheme}>
             <Stack.Navigator
               initialRouteName={screenNames.home}
@@ -71,7 +72,7 @@ const App = () => {
               <Stack.Screen name={screenNames.addAccount} component={NvAddAccount} initialParams={initialParams} />
             </Stack.Navigator>
         </NavigationContainer>
-      </ApolloProvider>  
+    </ApolloProvider>  
   );
 };
 

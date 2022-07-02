@@ -85,9 +85,13 @@ const AddAccount = ({ onBack, item }) => {
             props: {
                 variant: values.secondary,
                 title: buttonNames.delete,
-                handlePress: () =>handleDelete(),
+                handlePress: () => handleDelete(),
                 loading: editLoading || deleteLoading,
-                disabled: editLoading || deleteLoading
+                disabled: editLoading || deleteLoading,
+                confirmOnPress: true,
+                confirmText: 'Are you sure you want to delete this account?',
+                primaryConfirmText: buttonNames.delete,
+                secondaryConfirmText: buttonNames.cancel
             }
         }
     ]

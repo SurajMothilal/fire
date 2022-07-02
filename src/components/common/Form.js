@@ -1,12 +1,14 @@
 import React, { useCallback, useState, useEffect, useRef, createRef } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { View, TextInput, StyleSheet, TouchableOpacity, FlatList, Modal } from "react-native";
+import { View, TextInput, Modal, StyleSheet, TouchableOpacity, FlatList, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useForm, Controller } from "react-hook-form";
 import { capitalizeFirstLetter } from '../../services/stringHelper'
 import Button from "./Button";
 import Text from '../common/Text';
-import { spacing, colors, values, fontSize, formFieldTypes, icons, textInputTypes } from "../../constants";
+import { spacing, colors, values, fontSize, formFieldTypes, icons, textInputTypes, fontFamily } from "../../constants";
+
+const { height, width } = Dimensions.get('screen')
 
 const Form = ({
     defaultValues,
@@ -23,6 +25,13 @@ const Form = ({
     onFocus = () => {},
 }) => {
     const [showFormError, setShowFormError] = useState(true)
+    const [showConfirmModal, setShowConfirmModal] = useState({
+        show: false,
+        text: null,
+        primaryButtonText: null,
+        secondaryButtonText: null,
+        onPress: () => null
+    })
     const dropDownFields = fields.map((f) => f.type === formFieldTypes.dropdown ? { name: f.name, list: f.list } : undefined).filter(x => x)
     const secretFields = fields.map((f) => f.secure ? f.name : undefined).filter(x => x)
     const [hideSecret, setHideSecret] = useState({
@@ -50,7 +59,17 @@ const Form = ({
                 loading={isSubmitting || Component.props.loading}
                 handlePress={() => {
                     clearErrors()
-                    Component.props.handlePress()
+                    if (Component.props.confirmOnPress) {
+                        setShowConfirmModal({
+                            show: true,
+                            text: Component.props.confirmText,
+                            primaryButtonText: Component.props.primaryConfirmText,
+                            secondaryButtonText: Component.props.secondaryConfirmText,
+                            onPress: Component.props.handlePress
+                        })
+                    } else {
+                        Component.props.handlePress()
+                    }
                 }}
             />
         )
@@ -102,6 +121,16 @@ const Form = ({
         setValue(selectedFieldName, selection)
         clearErrors(selectedFieldName)
         resetDropdown()
+    })
+
+    const resetModal = useCallback(() => {
+        setShowConfirmModal({
+            show: false,
+            text: null,
+            primaryButtonText: null,
+            secondaryButtonText: null,
+            onPress: () => null
+        })
     })
 
     const renderInput = (fieldEntry, fieldType, onChange, onBlur, value) => {
@@ -213,6 +242,21 @@ const Form = ({
                 </View>
             )}
         </>
+        <Modal
+            visible={showConfirmModal.show}
+            transparent={true}
+        >
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                    <Text title={showConfirmModal.text} style={styles.confirmText}/>
+                    <Button title={showConfirmModal.primaryButtonText} handlePress={() => {
+                        resetModal()
+                        showConfirmModal.onPress()
+                    }} />
+                    <Button title={showConfirmModal.secondaryButtonText} handlePress={() => resetModal()} variant={values.link} />
+                </View>
+            </View>
+        </Modal>
     </View>
   );
 }
@@ -221,6 +265,23 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         padding: spacing.xlight
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(43, 43, 43, 0.8)'
+    },
+    modalContent: {
+        justifyContent: 'center',
+        backgroundColor: colors.white,
+        margin: spacing.medium,
+        paddingBottom: spacing.medium
+    },
+    confirmText: {
+        fontFamily: fontFamily.default,
+        fontSize: fontSize.medium,
+        textAlign: 'center',
+        marginVertical: spacing.medium
     },
     formContainer: {
         marginVertical: spacing.xlight,
