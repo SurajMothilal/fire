@@ -15,8 +15,14 @@ const editAccount = async (accountEditObject) => {
     return { id: accounts[0].id }
 }
 
+const deleteAccount = async (accountId) => {
+    const accounts = await db('accounts').where({ id: accountId }).del().returning('id')
+    return { id: accounts[0].id }
+}
+
 module.exports = {
     getAccountsByUser,
     saveAccount,
-    editAccount
+    editAccount,
+    deleteAccount
 }

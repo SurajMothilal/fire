@@ -23,7 +23,6 @@ const renderItem = (item, onAccountPress) => {
   };
 
 const AccountList = ({data = [], handleAccountAdd, onAccountPress }) => {
-    console.log(data)
     const investments = data.filter((dataPoint) =>  dataPoint.type === accountTypes.investment)
     const cash = data.filter((dataPoint) =>  dataPoint.type === accountTypes.cash)
     const debt = data.filter((dataPoint) =>  dataPoint.type === accountTypes.debt)

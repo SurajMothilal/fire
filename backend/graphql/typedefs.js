@@ -42,7 +42,8 @@ const typeDefs = gql`
 
   type Mutation {
     saveAccount(accountObject: AccountInput): AccountResponse,
-    editAccount(accountEditObject: AccountEditInput): AccountResponse
+    editAccount(accountEditObject: AccountEditInput): AccountResponse,
+    deleteAccount(accountId: ID!): AccountResponse
   }
 `
 

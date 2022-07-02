@@ -29,6 +29,13 @@ const mutations = {
         id
       }
     }
+  `,
+  deleteAccount: () => gql`
+    mutation DeleteAccount($accountId: ID!) {
+      deleteAccount(accountId: $accountId) {
+        id
+      }
+    }
   `
 }
 

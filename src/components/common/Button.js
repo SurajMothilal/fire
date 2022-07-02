@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     },
     secondaryButton: {
         borderColor: colors.black,
+        borderWidth: 1,
         height: 50,
         marginHorizontal: spacing.xlight,
         justifyContent: 'center'

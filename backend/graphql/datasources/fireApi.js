@@ -34,6 +34,11 @@ class FireAPI extends RESTDataSource {
     const result = await databaseHelper.editAccount(accountEditObject)
     return result
   }
+
+  async deleteAccount(accountId) {
+    const result = await databaseHelper.deleteAccount(accountId)
+    return result
+  }
 }
 
 module.exports = FireAPI

@@ -41,15 +41,16 @@ const Form = ({
         defaultValues,
         ...(validationSchema ? { resolver: yupResolver(validationSchema)} : {})
     });
-    const propInjectedAdditionalComponents = additionalComponents.map((Component) => {
+    const propInjectedAdditionalComponents = additionalComponents.map((Component, index) => {
         return (
             <Component.component
                 {...Component.props}
+                key={index}
                 disabled={isSubmitting || Component.props.disabled}
                 loading={isSubmitting || Component.props.loading}
                 handlePress={() => {
                     clearErrors()
-                    Component.props.handlePress
+                    Component.props.handlePress()
                 }}
             />
         )
@@ -206,7 +207,11 @@ const Form = ({
         <>
             <Button title={primaryButtonText} handlePress={handleSubmit(onSubmit)} loading={isSubmitting} disabled={isSubmitting} />
             {propInjectedAdditionalComponents}
-            {cancelButtonText && <Button title={cancelButtonText} handlePress={onFormCancel} variant={values.link}/>}
+            {cancelButtonText && (
+                <View style={propInjectedAdditionalComponents.length > 0 && styles.cancelContainer}>
+                    <Button title={cancelButtonText} handlePress={onFormCancel} variant={values.link}/>
+                </View>
+            )}
         </>
     </View>
   );
@@ -220,6 +225,9 @@ const styles = StyleSheet.create({
     formContainer: {
         marginVertical: spacing.xlight,
         marginHorizontal: spacing.xxlight
+    },
+    cancelContainer: {
+        marginTop: spacing.light
     },
     container: {
         marginVertical: spacing.light
