@@ -5,8 +5,9 @@ import { useFocusEffect } from '@react-navigation/native'
 import AccountList from './AccountList'
 import { localQueries, queries } from '../../services/graphqlQueryBuilder'
 import { useQuery } from '@apollo/client'
-import { accountTypes, spacing, colors, fontSize, fontFamily, fontWeight, sectionHeaders, values, icons } from '../../constants'
+import { accountTypes, spacing, colors, fontSize, fontFamily, fontWeight, sectionHeaders, values, icons, buttonNames } from '../../constants'
 import AccountPie from './AccountPie'
+import Button from '../common/Button'
 import ScreenHeader from '../common/ScreenHeader'
 import AccountDot from '../common/AccountDot'
 import LineDivider from '../common/LineDivider'
@@ -88,6 +89,18 @@ const AccountHome = ({ onAddAccount }) => {
             })
         }
     }, [accountsForUser, data])
+
+    const noAccountsFround = accountsForUser && accountsForUser.length === 0
+
+    if (noAccountsFround) {
+        return (
+            <View style={styles.emptyContainer}>
+                <Text title="You have no accounts. Add one to get started!" style={styles.emptyText}/>
+                <Button title={buttonNames.addAccount} handlePress={() => handleAccountAdd()} />
+            </View>
+        )
+    }
+
     return (
         <SafeAreaView>
             <ScreenHeader title={sectionHeaders.accounts} leftButtonProps={leftButtonProps} rightButtonProps={rightButtonProps} />
@@ -118,6 +131,17 @@ const AccountHome = ({ onAddAccount }) => {
 }
 
 const styles = StyleSheet.create({
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        marginHorizontal: spacing.light
+    },
+    emptyText: {
+        textAlign: 'center',
+        fontFamily: fontFamily.default,
+        fontSize: fontSize.medium,
+        marginBottom: spacing.medium
+    },
     netWorthContainer: {
         justifyContent: 'center',
         paddingHorizontal: spacing.xlarge,
