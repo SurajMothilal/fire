@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NvAccountHome from '../navigation/NvAccountHome'
+import NvNetworthHome from '../navigation/NvNetworthHome';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const Home = ({ signOutSuccess }) =>  {
 
             if (route.name === screenNames.accountHome) {
                 iconName = icons.account
-            } else if (route.name === screenNames.networth) {
+            } else if (route.name === screenNames.networthHome) {
                 iconName = icons.networth
             } else if (route.name === screenNames.budget) {
                 iconName = icons.budget
@@ -58,7 +59,7 @@ const Home = ({ signOutSuccess }) =>  {
         })}
     >
         <Tab.Screen name={screenNames.accountHome} component={NvAccountHome} />
-        <Tab.Screen name={screenNames.networth} component={NvAccountHome} />
+        <Tab.Screen name={screenNames.networthHome} component={NvNetworthHome} />
         <Tab.Screen name={screenNames.budget} component={NvAccountHome} />
         <Tab.Screen name={screenNames.profile} component={NvAccountHome} />
     </Tab.Navigator>

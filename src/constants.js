@@ -104,7 +104,7 @@ const screenNames = {
     forgotPasswordSubmit: 'forgotPasswordSubmit',
     passwordResetSuccessful: 'passwordResetSuccessful',
     accountHome: 'accountHome',
-    networth: 'fire',
+    networthHome: 'networthHome',
     budget: 'budget',
     profile: 'profile',
     addAccount: 'addAccount'
