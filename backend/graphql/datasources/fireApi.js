@@ -14,7 +14,8 @@ class FireAPI extends RESTDataSource {
         balance: account.balance || '',
         currency: account.currency || null,
         type: account.type || '',
-        userId: account.userId || null
+        userId: account.userId || null,
+        updatedAt: account['updated_at'] || ''
       }
   }
 

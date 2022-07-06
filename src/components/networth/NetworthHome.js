@@ -2,10 +2,11 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import Text from '../common/Text'
 import ScreenHeader from '../common/ScreenHeader'
-import { sectionHeaders, values, icons, spacing, fontFamily, fontSize, fontWeight, colors } from '../../constants'
+import { sectionHeaders, values, icons, spacing, fontFamily, fontSize, fontWeight, colors, timeRanges } from '../../constants'
 import NetworthChart from './NetworthChart'
 import Tabs from '../common/Tabs'
 import FormattedCurrency from '../common/FormattedCurrency'
+import NetworthList from './NetworthList'
 
 const NetworthHome = () => {
     const leftButtonProps = {
@@ -34,8 +35,25 @@ const NetworthHome = () => {
     const tabData = ['FatFIRE', 'LeanFIRE']
     const selectedTab = 'FatFIRE'
 
-    const filterTabs = ['1D', '1W', '1M', '3M', '1Y', 'ALL' ]
-    const selectedFilterTab = '1W'
+    const filterTabs = [timeRanges.day, timeRanges.week, timeRanges.month, timeRanges.quarter, timeRanges.year, timeRanges.all]
+    const selectedTimeRange = timeRanges.year
+
+    const networthHistory = [
+        {
+            timestamp: '1656785503496',
+            investmentPercentage: 30,
+            cashPercentage: 50.12,
+            debtPercentage: 19.73,
+            networth: 10040.12
+        },
+        {
+            timestamp: '1656785503496',
+            investmentPercentage: 30,
+            cashPercentage: 50,
+            debtPercentage: 20,
+            networth: 1210060.12
+        }
+    ]
 
     return (
         <SafeAreaView>
@@ -46,28 +64,28 @@ const NetworthHome = () => {
             <View style={styles.graphInfoContainer}>
                 <View>
                     <Text title="Current" style={styles.totalTitle} />
-                    <FormattedCurrency value="$25,001.23" style={styles.total} />
+                    <FormattedCurrency value={25000.12} style={styles.total} />
                 </View>
                 <View>
-                    <Text title="Time to Fire" style={styles.totalTitle} />
+                    <Text title="Time to Target" style={styles.totalTitle} />
                     <Text title="4 Years" style={styles.total} />
                 </View>
                 <View>
                     <Text title="Target" style={styles.totalTitle} />
-                    <FormattedCurrency value="$25,001.23" style={styles.total} />
+                    <FormattedCurrency value={1420000.32} style={styles.total} />
                 </View>
             </View>
             <NetworthChart data={DATA} />
             <View style={styles.tabContainer}>
-                <Tabs type="fixed" data={filterTabs} selectedTab={selectedFilterTab} />
+                <Tabs type="fixed" data={filterTabs} selectedTab={selectedTimeRange} />
             </View>
+            <NetworthList data={networthHistory} selectedTimeRange={selectedTimeRange} />
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     tabContainer: {
-        marginBottom: spacing.xxlight,
         marginTop: spacing.xlight
     },
     graphInfoContainer: {
@@ -76,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingHorizontal: spacing.xlight
+        paddingHorizontal: spacing.light,
     },
     totalTitle: {
         textAlign: 'center',

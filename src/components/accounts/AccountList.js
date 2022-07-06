@@ -1,5 +1,5 @@
 import React from 'react'
-import { SectionList, TouchableHighlight, View, StyleSheet, SafeAreaView } from 'react-native'
+import { SectionList, TouchableHighlight, View, StyleSheet } from 'react-native'
 import Text from '../../components/common/Text'
 import SectionTitle from '../common/SectionTitle';
 import { accountTypes, spacing, sectionHeaders, fontSize, values, icons } from '../../constants';
@@ -52,17 +52,15 @@ const AccountList = ({data = [], handleAccountAdd, onAccountPress }) => {
                 <CommonScreenTitle title={sectionHeaders.myAccounts} />
                 <Button variant={values.icon} iconName={icons.add} handlePress={handleAccountAdd} />
             </View>
-            <View style={styles.listContainer}>
-                <SectionList
-                    sections={updatedData}
-                    renderItem={({ item }) => renderItem(item, onAccountPress)}
-                    stickySectionHeadersEnabled={false}
-                    keyExtractor={(item) => item.id}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
-                    )}
-                />
-            </View>
+            <SectionList
+                sections={updatedData}
+                renderItem={({ item }) => renderItem(item, onAccountPress)}
+                stickySectionHeadersEnabled={false}
+                keyExtractor={(item) => item.id}
+                renderSectionHeader={({ section: { title } }) => (
+                    <SectionTitle title={sectionHeaders[title].toUpperCase()} style={styles.listSections} />
+                )}
+            />
         </View>
     )
 }
@@ -70,8 +68,6 @@ const AccountList = ({data = [], handleAccountAdd, onAccountPress }) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: spacing.light,
-    },
-    listContainer: {
     },
     listHeader: {
         flexDirection: 'row',
@@ -88,6 +84,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
+        marginLeft: spacing.xlight
     },
     listSections: {
         textAlign: 'left'

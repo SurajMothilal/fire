@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         paddingVertical: spacing.xxlight,
-        paddingRight: spacing.xlight,
+        paddingHorizontal: spacing.xlight,
         marginRight: spacing.xlight
     },
     selectedItemContainer: {
         backgroundColor: colors.black
     },
     item: {
-        justifyContent: 'flex-start',
+        textAlign: 'center',
         fontFamily: fontFamily.default,
         fontSize: fontSize.xsmall
     },
@@ -64,11 +64,10 @@ const styles = StyleSheet.create({
     },
     flatContainer: {
         flexDirection: 'row',
-        paddingVertical: spacing.light,
-        justifyContent: 'center'
+        paddingVertical: spacing.light
     },
     flatItemContainer: {
-        paddingHorizontal: spacing.light,
+        width: '16.66%',
         paddingVertical: spacing.xxlight + spacing.xxlight
     },
     selectedFlatItemContainer: {

@@ -18,8 +18,8 @@ const AccountDot = ({ type }) => {
 const styles = StyleSheet.create({
     dot: {
         alignSelf: 'center',
-        height: 10,
-        width: 10,
+        height: 8,
+        width: 8,
         borderRadius: 20,
     }
 })

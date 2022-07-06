@@ -37,7 +37,18 @@ const icons = {
     eye: 'eye-outline',
     eyeClosed: 'eye-off-outline',
     down: 'chevron-down-outline',
-    up: 'chevron-up-outline'
+    up: 'chevron-up-outline',
+    upCaret: 'caret-up-outline',
+    downCaret: 'caret-down-outline'
+}
+
+const timeRanges = {
+    day: '1D',
+    week: '1W',
+    month: '1M',
+    quarter: '3M',
+    year: '1Y',
+    all: 'ALL'
 }
 
 const currencyCodes = {
@@ -69,7 +80,8 @@ const sectionHeaders = {
     savingsRate: 'Savings Rate',
     addAccount: 'Add Account',
     netWorth: 'Net Worth',
-    myAccounts: 'My Accounts'
+    myAccounts: 'My Accounts',
+    networthHistory: 'Networth History'
 }
 
 const fontWeight = {
@@ -138,5 +150,6 @@ export {
     buttonNames,
     formFieldTypes,
     currencyCodes,
-    textInputTypes
+    textInputTypes,
+    timeRanges
 }

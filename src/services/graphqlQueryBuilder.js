@@ -10,6 +10,7 @@ const queries = {
         currency
         type
         userId
+        updatedAt
       }
     }
     `,

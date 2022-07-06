@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: fontSize.small,
         color: colors.black,
-        marginLeft: spacing.xlight,
         fontFamily: fontFamily.default
     }
 })

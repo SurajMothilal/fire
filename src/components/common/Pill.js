@@ -17,8 +17,7 @@ const Pill = ({ text, color, textStyle }) => {
 const styles = StyleSheet.create({
     container: {
         borderRadius: 10,
-        padding: spacing.xxlight,
-        marginLeft: spacing.xlight,
+        padding: spacing.xxlight
     },
     text: {
         color: colors.white,

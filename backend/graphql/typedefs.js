@@ -13,6 +13,7 @@ const typeDefs = gql`
     currency: String
     type: String
     userId: ID!
+    updatedAt: String
   }
 
   input AccountInput {

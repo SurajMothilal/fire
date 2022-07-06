@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
         color: colors.grey
     },
     totalTextContainer: {
-        flexDirection: 'column',
         alignItems: 'center'
     },
     rowContainer: {
