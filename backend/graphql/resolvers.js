@@ -3,11 +3,13 @@
 const resolvers = {
     Query: {
         accountsForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getAccountsByUser(userId),
+        fireProfileForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getFireProfileForUser(userId)
     },
     Mutation: {
         saveAccount: (_, { accountObject }, { dataSources }) => dataSources.fireAPI.saveAccount(accountObject),
         editAccount: (_, { accountEditObject }, { dataSources }) => dataSources.fireAPI.editAccount(accountEditObject),
-        deleteAccount: (_, { accountId }, { dataSources }) => dataSources.fireAPI.deleteAccount(accountId)
+        deleteAccount: (_, { accountId }, { dataSources }) => dataSources.fireAPI.deleteAccount(accountId),
+        saveFireProfile: (_, { fireProfileObject }, { dataSources }) => dataSources.fireAPI.saveFireProfile(fireProfileObject)
     }
 }
 

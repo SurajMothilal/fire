@@ -15,15 +15,33 @@ class FireAPI extends RESTDataSource {
         currency: account.currency || null,
         type: account.type || '',
         userId: account.userId || null,
-        updatedAt: account['updated_at'] || ''
+        updatedAt: account['updated_at'] || '',
+        createdAt: account['created_at'] || ''
       }
   }
+
+  fireProfileReducer(fireProfile) {
+    return {
+      targetYear: fireProfile.targetYear || null,
+      fireType: fireProfile.fireType || null,
+      targetYearlyExpense: fireProfile.targetYearlyExpense || null,
+      targetNetworth: fireProfile.targetNetworth || null,
+      userId: fireProfile.userId || null,
+      updatedAt: fireProfile['updated_at'] || '',
+      createdAt: fireProfile['created_at'] || ''
+    }
+}
 
   async getAccountsByUser(userId) {
       const response = await databaseHelper.getAccountsByUser(userId)
       return Array.isArray(response)
         ? response.map(account => this.accountReducer(account))
         : []
+  }
+
+  async getFireProfileForUser(userId) {
+    const response = await databaseHelper.getFireProfileForUser(userId)
+      return response ? this.fireProfileReducer(response) : response
   }
 
   async saveAccount(accountObject) {
@@ -38,6 +56,11 @@ class FireAPI extends RESTDataSource {
 
   async deleteAccount(accountId) {
     const result = await databaseHelper.deleteAccount(accountId)
+    return result
+  }
+
+  async saveFireProfile(fireProfileObject) {
+    const result = await databaseHelper.saveFireProfile(fireProfileObject)
     return result
   }
 }

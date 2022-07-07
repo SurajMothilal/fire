@@ -20,9 +20,21 @@ const deleteAccount = async (accountId) => {
     return { id: accounts[0].id }
 }
 
+const saveFireProfile = async (fireProfileObject) => {
+    const fireProfile = await db('fireprofile').insert(fireProfileObject).returning('id')
+    return { id: fireProfile[0].id }
+}
+
+const getFireProfileForUser = async (userId) => {
+    const fireProfile = await db('fireprofile').where('userId', userId)
+    return fireProfile.length > 0 ? fireProfile[0] : null
+}
+
 module.exports = {
     getAccountsByUser,
     saveAccount,
     editAccount,
-    deleteAccount
+    deleteAccount,
+    saveFireProfile,
+    getFireProfileForUser
 }

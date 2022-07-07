@@ -33,18 +33,40 @@ const typeDefs = gql`
     userId: ID!
   }
 
+  type FireProfile {
+    targetYear: Int
+    fireType: String
+    targetYearlyExpense: String
+    targetNetworth: Int
+    userId: ID!
+  }
+
+  input FireProfileInput {
+    targetYear: Int
+    fireType: String
+    targetYearlyExpense: String
+    targetNetworth: String
+    userId: ID!
+  }
+
+  type FireProfileResponse {
+    id: String
+  }
+
   type AccountResponse {
     id: String
   }
 
   type Query {
     accountsForUser(userId: String): [Account]
+    fireProfileForUser(userId: String): FireProfile
   }
 
   type Mutation {
     saveAccount(accountObject: AccountInput): AccountResponse,
     editAccount(accountEditObject: AccountEditInput): AccountResponse,
-    deleteAccount(accountId: ID!): AccountResponse
+    deleteAccount(accountId: ID!): AccountResponse,
+    saveFireProfile(fireProfileObject: FireProfileInput): FireProfileResponse
   }
 `
 
