@@ -18,12 +18,12 @@ const AddAccount = ({ onBack, item }) => {
                 id: item.id,
                 name: data.name,
                 type: data.type,
-                balance: data.balance,
-                currency: item.currency,
-                userId: item.userId
+                balance: parseFloat(data.balance, 2),
+                userId: item.userId,
+                currency: item.currency
             } }})
         } else {
-            await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9', currency: 'CAD' } }})
+            await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9', currency: 'CAD', balance: parseFloat(data.balance, 2) } }})
         }
     })
 

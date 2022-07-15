@@ -21,7 +21,7 @@ const AccountHome = ({ onAddAccount }) => {
     //     { variables: { userId: loggedInUserObj.loggedInUserId }, skip: !loggedInUserObj }
     // )
     const { loading, error, data, refetch } = useQuery(
-        queries.getAccountsByUser(),
+        queries.getUserAccounts(),
         { variables: { userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9' } }
     )
     const [totals, setTotals] = useState({
@@ -33,7 +33,7 @@ const AccountHome = ({ onAddAccount }) => {
         cashPercentage: 0,
         debtPercentage: 0
     })
-    const accountsForUser = data && data.accountsForUser
+    const accountsForUser = data && data.getUserAccounts
     // const [selectedTimeline, setSelectedTimeline] = useState(timeline.thisWeek)
 
     const handleAccountAdd = useCallback(() => {

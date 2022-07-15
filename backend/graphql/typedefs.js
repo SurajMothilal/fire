@@ -6,6 +6,14 @@ const { gql } = require('apollo-server')
 const typeDefs = gql`
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
+  type User {
+    id: ID!
+    firstName: String!
+    lastName: String
+    dob: String!
+    accounts: [Account]
+  }
+
   type Account {
     name: String
     id: ID!
@@ -18,7 +26,7 @@ const typeDefs = gql`
 
   input AccountInput {
     name: String
-    balance: String
+    balance: Float
     currency: String
     type: String
     userId: ID!
@@ -26,7 +34,7 @@ const typeDefs = gql`
 
   input AccountEditInput {
     name: String
-    balance: String
+    balance: Float
     currency: String
     type: String
     id: ID!
@@ -58,8 +66,10 @@ const typeDefs = gql`
   }
 
   type Query {
-    accountsForUser(userId: String): [Account]
+    getUser(id: ID!): User
+    getUserAccounts(userId: String): [Account]
     fireProfileForUser(userId: String): FireProfile
+    testMessage: String
   }
 
   type Mutation {

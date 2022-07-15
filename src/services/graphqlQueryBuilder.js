@@ -1,16 +1,15 @@
 import { gql, useMutation } from "@apollo/client"
 
 const queries = {
-  getAccountsByUser: () =>  gql`
-    query AccountsForUser($userId: String) {
-      accountsForUser(userId: $userId) {
+  getUserAccounts: () =>  gql`
+    query GetUserAccounts($userId: String) {
+      getUserAccounts(userId: $userId) {
         id
         name
         balance
         currency
         type
         userId
-        updatedAt
       }
     }
     `,

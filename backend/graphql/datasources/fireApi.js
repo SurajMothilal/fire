@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
-const databaseHelper = require('../../helpers/databaseHelper')
+const databaseHelper = require('../../helpers/dynamoHelper')
 
 class FireAPI extends RESTDataSource {
   constructor() {
@@ -15,9 +15,21 @@ class FireAPI extends RESTDataSource {
         currency: account.currency || null,
         type: account.type || '',
         userId: account.userId || null,
-        updatedAt: account['updated_at'] || '',
-        createdAt: account['created_at'] || ''
+        updatedAt: account['updatedAt'] || '',
+        createdAt: account['createdAt'] || ''
       }
+  }
+
+  userReducer(user) {
+    return {
+      id: user.id || null,
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      dob: user.currency || '',
+      accounts: user.accounts || [],
+      updatedAt: user['updateAt'] || '',
+      createdAt: user['createdAt'] || ''
+    }
   }
 
   fireProfileReducer(fireProfile) {
@@ -27,13 +39,18 @@ class FireAPI extends RESTDataSource {
       targetYearlyExpense: fireProfile.targetYearlyExpense || null,
       targetNetworth: fireProfile.targetNetworth || null,
       userId: fireProfile.userId || null,
-      updatedAt: fireProfile['updated_at'] || '',
-      createdAt: fireProfile['created_at'] || ''
+      updatedAt: fireProfile['updatedAt'] || '',
+      createdAt: fireProfile['createdAt'] || ''
     }
-}
+  }
 
-  async getAccountsByUser(userId) {
-      const response = await databaseHelper.getAccountsByUser(userId)
+  async getUser(id) {
+    const response = await databaseHelper.getUser(id)
+    return response ? this.userReducer(response) : response
+  }
+
+  async getUserAccounts(userId) {
+      const response = await databaseHelper.getUserAccounts(userId)
       return Array.isArray(response)
         ? response.map(account => this.accountReducer(account))
         : []

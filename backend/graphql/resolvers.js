@@ -2,8 +2,10 @@
 // schema.
 const resolvers = {
     Query: {
-        accountsForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getAccountsByUser(userId),
-        fireProfileForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getFireProfileForUser(userId)
+        getUser: (_, { id }, { dataSources }) => dataSources.fireAPI.getUser(id),
+        getUserAccounts: (_, { userId }, { dataSources }) => dataSources.fireAPI.getUserAccounts(userId),
+        fireProfileForUser: (_, { userId }, { dataSources }) => dataSources.fireAPI.getFireProfileForUser(userId),
+        testMessage: () => 'Test Message!'
     },
     Mutation: {
         saveAccount: (_, { accountObject }, { dataSources }) => dataSources.fireAPI.saveAccount(accountObject),

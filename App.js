@@ -31,7 +31,7 @@ const defaultOptions = {
 }
 
 const apolloClient = new ApolloClient({
-  uri: 'http://192.168.2.141:4000/graphql',
+  uri: 'http://localhost:3000/dev/graphql',
   cache,
   typeDefs,
   defaultOptions
