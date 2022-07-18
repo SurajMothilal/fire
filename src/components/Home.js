@@ -3,18 +3,16 @@ import { Text, View } from 'react-native';
 import { colors, icons, screenNames, values } from '../constants'
 import { useQuery } from '@apollo/client'
 import { signOut } from '../services/auth'
-import { localQueries } from '../services/graphqlQueryBuilder'
 import { NavigationContainer } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NvAccountHome from '../navigation/NvAccountHome'
-import NvNetworthHome from '../navigation/NvNetworthHome';
+import NvPortfolioHome from '../navigation/NvPortfolioHome';
 
 const Tab = createBottomTabNavigator();
 
 const Home = ({ signOutSuccess }) =>  {
     const [signingOut, setSigningOut] = useState(false)
-    const { data } = useQuery(localQueries.loggedInUserId())
     const handleSignOutSuccess = useCallback(() => {
         setSigningOut(false)
         signOutSuccess()
@@ -44,8 +42,8 @@ const Home = ({ signOutSuccess }) =>  {
 
             if (route.name === screenNames.accountHome) {
                 iconName = icons.account
-            } else if (route.name === screenNames.networthHome) {
-                iconName = icons.networth
+            } else if (route.name === screenNames.portfolioHome) {
+                iconName = icons.portfolio
             } else if (route.name === screenNames.budget) {
                 iconName = icons.budget
             } else if (route.name === screenNames.profile) {
@@ -58,8 +56,8 @@ const Home = ({ signOutSuccess }) =>  {
             tabBarInactiveTintColor: colors.grey,
         })}
     >
+        <Tab.Screen name={screenNames.portfolioHome} component={NvPortfolioHome} />
         <Tab.Screen name={screenNames.accountHome} component={NvAccountHome} />
-        <Tab.Screen name={screenNames.networthHome} component={NvNetworthHome} />
         <Tab.Screen name={screenNames.budget} component={NvAccountHome} />
         <Tab.Screen name={screenNames.profile} component={NvAccountHome} />
     </Tab.Navigator>

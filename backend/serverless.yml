@@ -3,6 +3,7 @@
 service: apollo-lambda
 provider:
   name: aws
+  profile: serverless
   runtime: nodejs16.x
 functions:
   graphql:

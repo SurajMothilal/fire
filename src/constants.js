@@ -30,7 +30,7 @@ const icons = {
     account: 'card-outline',
     add: 'add-outline',
     filter: 'options-outline',
-    networth: 'trending-up-outline',
+    portfolio: 'trending-up-outline',
     budget: 'wallet-outline',
     profile: 'person-outline',
     back: 'chevron-back-outline',
@@ -65,11 +65,20 @@ const fontSize = {
     xsmall: 12
 }
 
+const fireTypes = {
+    fat: 'FatFIRE',
+    lean: 'LeanFIRE',
+    traditional: 'Traditional',
+    custom: 'Custom'
+}
+
 const buttonNames = {
     addAccount: 'Add Account',
     updateAccount: 'Update Account',
+    getStarted: 'Get Started',
     delete: 'Delete',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    submit: 'Submit'
 }
 
 const sectionHeaders = {
@@ -81,7 +90,12 @@ const sectionHeaders = {
     addAccount: 'Add Account',
     netWorth: 'Net Worth',
     myAccounts: 'My Accounts',
-    networthHistory: 'Networth History'
+    history: 'History',
+    current: 'Current',
+    fireEta: 'Time To Target',
+    target: 'Target',
+    fireProfile: 'FIRE Profile',
+    portfolioSummary: 'Portfolio Summary'
 }
 
 const fontWeight = {
@@ -116,10 +130,11 @@ const screenNames = {
     forgotPasswordSubmit: 'forgotPasswordSubmit',
     passwordResetSuccessful: 'passwordResetSuccessful',
     accountHome: 'accountHome',
-    networthHome: 'networthHome',
+    portfolioHome: 'portfolioHome',
     budget: 'budget',
     profile: 'profile',
-    addAccount: 'addAccount'
+    addAccount: 'addAccount',
+    addFireProfile: 'addFireProfile'
 }
 
 const errors = {
@@ -151,5 +166,6 @@ export {
     formFieldTypes,
     currencyCodes,
     textInputTypes,
-    timeRanges
+    timeRanges,
+    fireTypes
 }

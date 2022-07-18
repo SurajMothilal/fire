@@ -1,27 +1,33 @@
 import React from 'react'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors, fontFamily, fontSize, fontWeight, spacing } from '../../constants'
 import Text from './Text'
 
-const renderItem = (item, selected) => {
+const renderItem = (item, selected, onPress) => {
     const itemSelected = selected === item
     return (
-        <View style={{...styles.itemContainer, ...(itemSelected ? styles.selectedItemContainer : {})}}>
+        <TouchableOpacity
+            onPress={() => onPress(item)}
+            style={{...styles.itemContainer, ...(itemSelected ? styles.selectedItemContainer : {})}}
+        >
             <Text style={{...styles.item, ...(itemSelected ? styles.selectedItem : {})}} title={item} />
-        </View>
+        </TouchableOpacity>
     )
 }
 
-const Tabs = ({ data, selectedTab, type }) => {
+const Tabs = ({ data, selectedTab, type, onPress }) => {
     if (type === "fixed") {
         return (
             <View style={styles.flatContainer}>
                 {data.map((item) => {
                     const itemSelected = selectedTab === item
                     return (
-                        <View style={{...styles.flatItemContainer, ...(itemSelected ? styles.selectedFlatItemContainer : {}) }}>
+                        <TouchableOpacity
+                            onPress={() => onPress(item)}
+                            style={{...styles.flatItemContainer, ...(itemSelected ? styles.selectedFlatItemContainer : {}) }}
+                        >
                             <Text style={{...styles.item, ...(itemSelected ? styles.selectedFlatItem : {})}} title={item} />
-                        </View>
+                        </TouchableOpacity>
                     )
                 })}
             </View>
@@ -29,7 +35,7 @@ const Tabs = ({ data, selectedTab, type }) => {
     }
     return (
         <View style={styles.container}>
-            <FlatList horizontal={true} data={data} renderItem={({ item }) => renderItem(item, selectedTab)}/>
+            <FlatList horizontal={true} data={data} renderItem={({ item }) => renderItem(item, selectedTab, onPress)}/>
         </View>
     )
 }

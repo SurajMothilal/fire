@@ -37,7 +37,7 @@ class FireAPI extends RESTDataSource {
       targetYear: fireProfile.targetYear || null,
       fireType: fireProfile.fireType || null,
       targetYearlyExpense: fireProfile.targetYearlyExpense || null,
-      targetNetworth: fireProfile.targetNetworth || null,
+      targetPortfolioValue: fireProfile.targetPortfolioValue || null,
       userId: fireProfile.userId || null,
       updatedAt: fireProfile['updatedAt'] || '',
       createdAt: fireProfile['createdAt'] || ''

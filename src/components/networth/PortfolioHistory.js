@@ -26,17 +26,17 @@ const renderItem = (item, selectedTimeRange) => {
     }
 
     const formattedTimestamp = formattedDate(item.timestamp, options)
-    let networthChangeColor = colors.grey
-    let networthChangeIcon
-    if (item.networthChange > 0) {
-        networthChangeColor = colors.green
-        networthChangeIcon = icons.upCaret
-    } else if (item.networthChange < 0) {
-        networthChangeColor = colors.red
-        networthChangeIcon = icons.downCaret
+    let portfolioChangeColor = colors.grey
+    let portfolioChangeIcon
+    if (item.portfolioChange > 0) {
+        portfolioChangeColor = colors.green
+        portfolioChangeIcon = icons.upCaret
+    } else if (item.portfolioChange < 0) {
+        portfolioChangeColor = colors.red
+        portfolioChangeIcon = icons.downCaret
     }
-    const networthChangeComponent = item.networthChange
-        ?  <FormattedCurrency value={item.networthChange} style={{...styles.networthChangeEmpty, ...{ color: networthChangeColor }}} />
+    const networthChangeComponent = item.portfolioChange
+        ?  <FormattedCurrency value={item.portfolioChange} style={{...styles.networthChangeEmpty, ...{ color: portfolioChangeColor }}} />
         :  <Text title="-" style={styles.networthChangeEmpty} />
     return (
         <View style={styles.itemContainer}>
@@ -45,23 +45,21 @@ const renderItem = (item, selectedTimeRange) => {
                 <View style={styles.networthSplitContainer}>
                     <View style={styles.networthSplit}>
                         <AccountDot type={accountTypes.cash} />
-                        <Text title={`${item.cashPercentage}%`} style={styles.networthSplitText} />
+                        <FormattedCurrency value={item.cash} style={styles.networthSplitText} />
+                        <Text title={`(${item.cashPercentage}%)`} style={styles.networthSplitText} />
                     </View>
                     <View style={styles.networthSplit}>
                         <AccountDot type={accountTypes.investment} />
-                        <Text title={`${item.investmentPercentage}%`} style={styles.networthSplitText} />
-                    </View>
-                    <View style={styles.networthSplit}>
-                        <AccountDot type={accountTypes.debt} />
-                        <Text title={`${item.debtPercentage}%`} style={styles.networthSplitText} />
+                        <FormattedCurrency value={item.investments} style={styles.networthSplitText} />
+                        <Text title={`(${item.investmentPercentage}%)`} style={styles.networthSplitText} />
                     </View>
                 </View>
             </View>
             <View style={styles.chartContainer}>
                 <View style={styles.networthContainer}>
-                    <FormattedCurrency value={item.networth} style={styles.subTextStyle} />
+                    <FormattedCurrency value={item.portfolioValue} style={styles.subTextStyle} />
                     <View style={styles.changeContainer}>
-                        {networthChangeIcon && <Icon iconName={networthChangeIcon} size={fontSize.small} iconColor={networthChangeColor} />}
+                        {portfolioChangeIcon && <Icon iconName={portfolioChangeIcon} size={fontSize.small} iconColor={portfolioChangeColor} />}
                         {networthChangeComponent}
                     </View>
                 </View>
@@ -70,17 +68,17 @@ const renderItem = (item, selectedTimeRange) => {
     )
 }
 
-const NetworthList = ({ data, selectedTimeRange }) => {
+const PortfolioHistory = ({ data, selectedTimeRange }) => {
     const updatedList = data.map((item, index) => {
         return {
             ...item,
-            networthChange: index === 0 ? null : item.networth - data[index - 1].networth
+            portfolioChange: index === 0 ? null : item.portfolioValue - data[index - 1].portfolioValue
         }
     })
     return (
         <View style={styles.container}>
             <View style={styles.listHeader}>
-                <CommonScreenTitle title={sectionHeaders.networthHistory} />
+                <CommonScreenTitle title={sectionHeaders.history} />
             </View>
             <FlatList
                 data={updatedList.reverse()}
@@ -97,12 +95,13 @@ const styles = StyleSheet.create({
     },
     networthSplit: {
         flexDirection: 'row',
-        marginTop: spacing.xxlight
+        marginTop: spacing.xxlight,
+        marginRight: spacing.xxlight,
+        marginLeft: spacing.xxlight,
     },
     networthSplitText: {
-        marginRight: spacing.xlight,
-        marginLeft: spacing.xxlight,
-        fontSize: fontSize.small / 1.1
+        fontSize: fontSize.small / 1.1,
+        marginLeft: spacing.xxlight
     },
     networthSplitContainer: {
         flexDirection: 'row'
@@ -155,4 +154,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NetworthList
+export default PortfolioHistory

@@ -6,7 +6,7 @@ import ScreenTitle from '../common/ScreenTitle'
 import Form from '../common/Form'
 import { confirmSignup, resendConfirmation } from '../../services/auth'
 import Button from '../common/Button'
-import { loggedInUserId } from '../../graphql/cache'
+// import { loggedInUserId } from '../../graphql/cache'
 import { colors, fontSize, spacing, values, errors } from '../../constants'
 import { errorCodes } from '../../services/errorHandler'
 
@@ -23,7 +23,7 @@ const SignupConfirmation = ({ handleSuccess, email, locale }) => {
         setFormDisable(false)
         setSubmitting(false)
         setCodeResending(false)
-        loggedInUserId(user?.username)
+        // loggedInUserId(user?.username)
         handleSuccess()
     }
 

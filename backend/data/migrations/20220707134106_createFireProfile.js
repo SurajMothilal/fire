@@ -6,7 +6,7 @@ exports.up = async knex => {
     tbl.integer('targetYear', 4).notNullable()
     tbl.text('fireType', 128).notNullable()
     tbl.decimal('targetYearlyExpense', 15, 2)
-    tbl.decimal('targetNetworth', 15, 2)
+    tbl.decimal('targetPortfolioValue', 15, 2)
     tbl.uuid('userId').notNullable().references('id').inTable('users').onDelete('CASCADE')
     tbl.timestamps(false, true)
   })

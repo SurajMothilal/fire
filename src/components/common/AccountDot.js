@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { accountTypes, colors, spacing } from '../../constants';
 
-const AccountDot = ({ type }) => {
+const AccountDot = ({ type, style = {} }) => {
     let backgroundColor
     if (type === accountTypes.cash) {
         backgroundColor = colors.green
@@ -12,7 +12,7 @@ const AccountDot = ({ type }) => {
         backgroundColor = colors.purple
     }
 
-    return <View title={type} style={{ ...styles.dot, ...{ backgroundColor } }} />
+    return <View title={type} style={{ ...styles.dot, ...{ backgroundColor }, ...style }} />
 }
 
 const styles = StyleSheet.create({

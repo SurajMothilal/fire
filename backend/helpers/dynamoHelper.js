@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { v4 } = require('uuid')
 // Create the DynamoDB service client module using ES6 syntax.
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb')
@@ -9,8 +10,8 @@ const REGION = "us-east-1" // For example, "us-east-1".
 const ddbClient = new DynamoDBClient({ 
     region: REGION,
     credentials: {
-        accessKeyId: 'AKIAT5QF64ZBBXGKFBDZ',
-        secretAccessKey: 'SmhE79SUNxwk+g1jbAkZSelv05qXtUuM1R6OkYAs'
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY
     }
 })
 
@@ -72,6 +73,7 @@ const getUserAccounts = async (userId) => {
         
     }
     const userAccounts = await ddbDocClient.send(new QueryCommand(params))
+    console.log(userAccounts)
     return userAccounts.Items
 }
 

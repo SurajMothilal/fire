@@ -14,8 +14,6 @@ import NvForgotPassword from './src/navigation/NvForgotPassword'
 import NvForgotPasswordSubmit from './src/navigation/NvForgotPasswordSubmit'
 import NvPasswordResetSuccessful from './src/navigation/NvPasswordResetSuccessful'
 import NvAccountHome from './src/navigation/NvAccountHome'
-import { typeDefs } from './src/graphql/typedef'
-import { cache } from './src/graphql/cache'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import NvAddAccount from './src/navigation/NvAddAccount'
 
@@ -32,8 +30,7 @@ const defaultOptions = {
 
 const apolloClient = new ApolloClient({
   uri: 'http://localhost:3000/dev/graphql',
-  cache,
-  typeDefs,
+  cache: new InMemoryCache(),
   defaultOptions
 });
 

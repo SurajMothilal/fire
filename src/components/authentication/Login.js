@@ -9,7 +9,7 @@ import Form from '../common/Form'
 import { login } from '../../services/auth'
 import { errors } from '../../constants'
 import { errorCodes } from '../../services/errorHandler'
-import { loggedInUserId } from '../../graphql/cache'
+// import { loggedInUserId } from '../../graphql/cache'
 import Text from '../common/Text'
 
 
@@ -24,7 +24,7 @@ const Login = ({
     const [submitting, setSubmitting] = useState(false);
     const loginSuccess = useCallback(async (user) => {
         if(user?.attributes?.email_verified) {
-            loggedInUserId(user?.username)
+            // loggedInUserId(user?.username)
             handleLoginSuccess()
         } else {
             await resendConfirmation(user?.attributes?.email)

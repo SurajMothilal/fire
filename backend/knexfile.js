@@ -4,11 +4,11 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      host : 'firedb-dev.ceigi6hygtrv.us-east-1.rds.amazonaws.com',
       port : 5432,
-      user : 'fire_admin',
+      user : 'suraj2612',
       password : 'savvy2612',
-      database : 'firedevdb'
+      database : 'firedb-dev'
     },
     migrations: {
       directory: './data/migrations',

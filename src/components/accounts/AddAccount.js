@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { SafeAreaView } from 'react-native'
 import { useMutationHook, mutations } from '../../services/graphqlQueryBuilder'
+import { preparePayload } from '../../services/stringHelper';
 import * as Yup from 'yup';
 import ScreenHeader from '../common/ScreenHeader'
 import Button from '../common/Button';
@@ -11,24 +12,32 @@ const AddAccount = ({ onBack, item }) => {
     const [formError, setFormError] = useState(null)
     const [addAccount, { loading: addLoading }] = useMutationHook(mutations.saveAccount(), onBack, (error) => setFormError(error.message))
     const [editAccount, { loading: editLoading }] = useMutationHook(mutations.editAccount(), onBack, (error) => setFormError(error.message))
-    const [deleteAccount, { loading: deleteLoading }] = useMutationHook(mutations.deleteAccount(), onBack, (error) => setFormError(error.message))
+    const [removeAccount, { loading: deleteLoading }] = useMutationHook(mutations.deleteAccount(), onBack, (error) => setFormError(error.message))
     const handleSubmit = useCallback(async (data) => {
+        console.log({
+            id: item.id,
+            name: data.name,
+            type: data.type,
+            balance: parseFloat(data.balance, 2),
+            userId: item.userId,
+            currency: item.currency
+        })
         if (item) {
-            await editAccount({ variables: { accountEditObject: {
+            await editAccount({ variables: { input: preparePayload({
                 id: item.id,
                 name: data.name,
                 type: data.type,
                 balance: parseFloat(data.balance, 2),
                 userId: item.userId,
                 currency: item.currency
-            } }})
+            })}})
         } else {
             await addAccount({ variables: { accountObject: { ...data, userId: 'b13340b4-d3c6-427c-ad74-1d9046d199d9', currency: 'CAD', balance: parseFloat(data.balance, 2) } }})
         }
     })
 
     const handleDelete = useCallback(async () => {
-        await deleteAccount({ variables: { accountId: item.id }})
+        await removeAccount({ variables: { input: { id: item.id }}})
     })
 
     const leftButtonProps = {
@@ -68,9 +77,11 @@ const AddAccount = ({ onBack, item }) => {
             .max(30, 'Name must be less than 30 characters'),
         type: Yup.string()
             .required('Type is required'),
-        balance: Yup.string()
+        balance: Yup.number()
+            .transform(value => (isNaN(value) ? undefined : value))
             .required('Current Balance is required')
-            .matches(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/, 'Enter a valid balance'),       
+            .min(0, 'Must be greater than 0')
+            .max(10000000000, 'Amount too large. Enter a smaller amount'),      
     });
 
     const defaultValues = {

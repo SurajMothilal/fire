@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import Text from '../common/Text'
-import { useFocusEffect } from '@react-navigation/native'
 import AccountList from './AccountList'
-import { localQueries, queries } from '../../services/graphqlQueryBuilder'
-import { useQuery } from '@apollo/client'
-import { accountTypes, spacing, colors, fontSize, fontFamily, fontWeight, sectionHeaders, values, icons, buttonNames } from '../../constants'
+import { queries } from '../../services/graphqlQueryBuilder'
+import { accountTypes, spacing, colors, fontSize, fontFamily, fontWeight, sectionHeaders, values, icons, buttonNames, timeline } from '../../constants'
 import AccountPie from './AccountPie'
 import Button from '../common/Button'
 import ScreenHeader from '../common/ScreenHeader'
-import AccountDot from '../common/AccountDot'
-import LineDivider from '../common/LineDivider'
 import Pill from '../common/Pill'
 import FormattedCurrency from '../common/FormattedCurrency'
+import { useQuery } from '@apollo/client'
 
 const AccountHome = ({ onAddAccount }) => {
     // const { data: loggedInUserObj } = useQuery(localQueries.loggedInUserId())
@@ -35,6 +32,7 @@ const AccountHome = ({ onAddAccount }) => {
     })
     const accountsForUser = data && data.getUserAccounts
     // const [selectedTimeline, setSelectedTimeline] = useState(timeline.thisWeek)
+    const [selectedTimeline, setSelectedTimeline] = useState(timeline.thisWeek)
 
     const handleAccountAdd = useCallback(() => {
         onAddAccount(refetch)
@@ -104,7 +102,6 @@ const AccountHome = ({ onAddAccount }) => {
     return (
         <SafeAreaView>
             <ScreenHeader title={sectionHeaders.accounts} leftButtonProps={leftButtonProps} rightButtonProps={rightButtonProps} />
-            {/* <AccountPie investment={totals.investmentPercentage} cash={totals.cashPercentage} debt={totals.debtPercentage} /> */}
             <View style={styles.netWorthContainer}>
                 <View style={styles.totalTextContainer}>
                     <Pill text={sectionHeaders.netWorth.toUpperCase()} color={colors.orange} />

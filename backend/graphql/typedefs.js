@@ -45,7 +45,7 @@ const typeDefs = gql`
     targetYear: Int
     fireType: String
     targetYearlyExpense: String
-    targetNetworth: Int
+    targetPortfolioValue: Float
     userId: ID!
   }
 
@@ -53,7 +53,7 @@ const typeDefs = gql`
     targetYear: Int
     fireType: String
     targetYearlyExpense: String
-    targetNetworth: String
+    targetPortfolioValue: String
     userId: ID!
   }
 

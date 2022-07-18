@@ -6,7 +6,16 @@ const formattedDate = (text, options = { month: 'long', year: 'numeric' }, local
     return new Intl.DateTimeFormat(locale, options).format(text)
 }
 
+const preparePayload = (item) => {
+    return {
+        ...item,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt
+    }
+}
+
 export {
     capitalizeFirstLetter,
-    formattedDate
+    formattedDate,
+    preparePayload
 }

@@ -4,7 +4,7 @@ import { VictoryLine, VictoryGroup, VictoryTooltip, VictoryVoronoiContainer, Vic
 import { View } from 'react-native'
 import { colors, fontSize } from '../../constants'
 
-const NetworthChart = ({ data }) => {
+const PortfolioGrowthChart = ({ data }) => {
     return (
         <View style={styles.container}>
             <VictoryGroup
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NetworthChart
+export default PortfolioGrowthChart

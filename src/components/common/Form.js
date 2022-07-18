@@ -46,7 +46,7 @@ const Form = ({
     })
     const [dropdownTop, setDropdownTop] = useState(0)
     const [visible, setVisible] = useState({ show: false, options: [], name: null })
-    const { register, control, handleSubmit, formState: { errors, isDirty, isSubmitting }, clearErrors, setValue } = useForm({
+    const { register, control, handleSubmit, formState: { errors, isDirty, isSubmitting }, clearErrors, setValue, getValues } = useForm({
         defaultValues,
         ...(validationSchema ? { resolver: yupResolver(validationSchema)} : {})
     });
@@ -137,6 +137,7 @@ const Form = ({
     const hideFormErrors = () => {
         if(showFormError) setShowFormError(false)
     }
+
     const fieldName = fieldEntry.name
     if (fieldType === formFieldTypes.dropdown) {
         const fieldObj = dropdownSelections[fieldName]
@@ -218,15 +219,37 @@ const Form = ({
             {fields.map((fieldEntry) => {
                 const fieldName = fieldEntry.name
                 const fieldType = fieldEntry.type
+                const fieldHelpText = fieldEntry.helpText
+                const errorStyle = {
+                    ...styles.errorText,
+                    ...(fieldHelpText ? { marginBottom: 0 }: {})
+                }
+                const errorFallbackComponent = fieldHelpText ? null : <Text style={errorStyle} title="" />
+
+                let showField = true
+                if (fieldEntry.dependsOn) {
+                    const dependentValue = getValues(fieldEntry.dependsOn.field)
+                    if (!dependentValue) {
+                        showField = false
+                    } else if (fieldEntry.dependsOn.condition === 'not') {
+                        showField = fieldEntry.dependsOn.value !== dependentValue
+                    } else if (fieldEntry.dependsOn.condition === 'is') {
+                        showField = fieldEntry.dependsOn.value === dependentValue
+                    }
+                }
+
+                if (showField === false) return null
+
                 return (
                     <View key={fieldName}>
-                        <Text title={fieldEntry.placeholder} />
+                        <Text title={fieldEntry.placeholder} style={styles.placeholderText} />
                         <Controller
                             control={control}
                             render={({ field: { value, onChange, onBlur } }) => renderInput(fieldEntry, fieldType, onChange, onBlur, value)}
                             name={fieldName}
                         />
-                        {errors[fieldName] ? <Text style={styles.errorText} title={errors[fieldName].message} /> : <Text style={styles.errorText} title="" />}
+                        {errors[fieldName] ? <Text style={errorStyle} title={errors[fieldName].message} /> : errorFallbackComponent}
+                        {fieldHelpText && <Text title={fieldHelpText} style={styles.helpText} />}
                     </View>
                 )
             })}
@@ -360,7 +383,19 @@ const styles = StyleSheet.create({
     },
     dropdownItem: {
         backgroundColor: colors.white,
-        marginVertical: spacing.xlight
+        margin: spacing.xlight,
+        width: '100%'
+    },
+    placeholderText: {
+        marginLeft: spacing.xlight
+    },
+    helpText: {
+        marginHorizontal: spacing.xlight,
+        marginBottom: spacing.xlight,
+        marginTop: spacing.xxlight,
+        fontStyle: 'italic',
+        color: colors.grey,
+        fontSize: fontSize.small
     }
 })
 

@@ -9,9 +9,9 @@ const ScreenHeader = ({ title, leftButtonProps, rightButtonProps }) => {
     return (
         <>
             <View style={styles.headerContainer}>
-                {leftButtonProps ? <Button {...leftButtonProps} /> : <View/> }
+                {leftButtonProps ? <Button {...leftButtonProps} /> : <View style={{ width: 25 }}/> }
                 <CommonScreenTitle title={title} />
-                {rightButtonProps ? <Button {...rightButtonProps} /> : <View/> }
+                {rightButtonProps ? <Button {...rightButtonProps} /> : <View style={{ width: 25 }}/> }
             </View>
             <LineDivider />
         </>
