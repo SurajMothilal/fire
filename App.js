@@ -29,7 +29,7 @@ const defaultOptions = {
 }
 
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3000/dev/graphql',
+  uri: 'https://7gkjmoa2q9.execute-api.us-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache(),
   defaultOptions
 });

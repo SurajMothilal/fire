@@ -14,16 +14,9 @@ const AddAccount = ({ onBack, item }) => {
     const [editAccount, { loading: editLoading }] = useMutationHook(mutations.editAccount(), onBack, (error) => setFormError(error.message))
     const [removeAccount, { loading: deleteLoading }] = useMutationHook(mutations.deleteAccount(), onBack, (error) => setFormError(error.message))
     const handleSubmit = useCallback(async (data) => {
-        console.log({
-            id: item.id,
-            name: data.name,
-            type: data.type,
-            balance: parseFloat(data.balance, 2),
-            userId: item.userId,
-            currency: item.currency
-        })
+        console.log(item)
         if (item) {
-            await editAccount({ variables: { input: preparePayload({
+            await editAccount({ variables: { accountEditObject: preparePayload({
                 id: item.id,
                 name: data.name,
                 type: data.type,
@@ -37,7 +30,7 @@ const AddAccount = ({ onBack, item }) => {
     })
 
     const handleDelete = useCallback(async () => {
-        await removeAccount({ variables: { input: { id: item.id }}})
+        await removeAccount({ variables: { accountId: item.id }})
     })
 
     const leftButtonProps = {
